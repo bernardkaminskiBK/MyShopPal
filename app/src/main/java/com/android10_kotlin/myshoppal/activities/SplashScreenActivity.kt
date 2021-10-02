@@ -43,7 +43,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private suspend fun wait() {
         delay(3000L)
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }
