@@ -1,7 +1,8 @@
-package com.android10_kotlin.myshoppal
+package com.android10_kotlin.myshoppal.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.android10_kotlin.myshoppal.R
 
 class MainActivity : AppCompatActivity() {
 

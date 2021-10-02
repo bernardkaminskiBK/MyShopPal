@@ -1,4 +1,4 @@
-package com.android10_kotlin.myshoppal
+package com.android10_kotlin.myshoppal.activities
 
 import android.content.Intent
 import android.os.Build
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
+import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivitySplashScreenBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
