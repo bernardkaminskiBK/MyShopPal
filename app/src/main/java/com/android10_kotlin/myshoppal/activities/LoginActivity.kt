@@ -7,6 +7,10 @@ import android.text.TextUtils
 import android.view.View
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityLoginBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
 
@@ -20,7 +24,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         mBinding.tvForgotPassword.setOnClickListener(this)
         mBinding.btnLogin.setOnClickListener(this)
         mBinding.tvRegister.setOnClickListener(this)
-
     }
 
     override fun onClick(view: View?) {
@@ -30,7 +33,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
                 }
                 R.id.btn_login -> {
-                    validateLoginDetails()
+                    loginRegisteredUser()
                 }
                 R.id.tv_register -> {
                     startActivity(Intent(this, RegisterActivity::class.java))
@@ -50,9 +53,28 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 false
             }
             else -> {
-                showErrorSnackBar("Your details are valid.", false)
                 true
             }
+        }
+    }
+
+    private fun loginRegisteredUser() {
+        if (validateLoginDetails()) {
+            showProgressDialog(getString(R.string.please_wait))
+
+            val email: String = mBinding.etEmail.text.toString().trim { it <= ' ' }
+            val password: String = mBinding.etPassword.text.toString().trim { it <= ' ' }
+
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(
+                    OnCompleteListener<AuthResult> { task ->
+                        hideProgressDialog()
+                        if (task.isSuccessful) {
+                            showErrorSnackBar("You are logged in successfully.", false)
+                        } else {
+                            showErrorSnackBar(task.exception!!.message.toString(), true)
+                        }
+                    })
         }
     }
 

@@ -23,8 +23,7 @@ class RegisterActivity : BaseActivity() {
         setupToolbar()
 
         mBinding.tvLogin.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            onBackPressed()
         }
 
         mBinding.btnRegister.setOnClickListener {
@@ -88,7 +87,6 @@ class RegisterActivity : BaseActivity() {
                 false
             }
             else -> {
-//                showErrorSnackBar("Your details are valid.", false)
                 true
             }
         }
@@ -101,7 +99,7 @@ class RegisterActivity : BaseActivity() {
             showProgressDialog(getString(R.string.please_wait))
 
             val email: String = mBinding.etEmail.text.toString().trim { it <= ' ' }
-            val password: String = mBinding.etEmail.text.toString().trim { it <= ' ' }
+            val password: String = mBinding.etPassword.text.toString().trim { it <= ' ' }
 
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
