@@ -64,17 +64,27 @@ class RegisterActivity : BaseActivity() {
             }
 
             TextUtils.isEmpty(mBinding.etConfirmPassword.text.toString().trim { it <= ' ' }) -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_enter_confirm_password), true)
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_enter_confirm_password),
+                    true
+                )
                 false
             }
 
-            mBinding.etPassword.text.toString().trim { it <= ' ' } != mBinding.etConfirmPassword.text.toString()
+            mBinding.etPassword.text.toString()
+                .trim { it <= ' ' } != mBinding.etConfirmPassword.text.toString()
                 .trim { it <= ' ' } -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_password_and_confirm_password_mismatch), true)
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_password_and_confirm_password_mismatch),
+                    true
+                )
                 false
             }
             !mBinding.cbTermsAndCondition.isChecked -> {
-                showErrorSnackBar(resources.getString(R.string.err_msg_agree_terms_and_condition), true)
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_agree_terms_and_condition),
+                    true
+                )
                 false
             }
             else -> {
@@ -88,12 +98,15 @@ class RegisterActivity : BaseActivity() {
 
         if (validateRegisterDetails()) {
 
+            showProgressDialog(getString(R.string.please_wait))
+
             val email: String = mBinding.etEmail.text.toString().trim { it <= ' ' }
             val password: String = mBinding.etEmail.text.toString().trim { it <= ' ' }
 
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
+                        hideProgressDialog()
                         if (task.isSuccessful) {
                             val firebaseUser: FirebaseUser = task.result!!.user!!
                             showErrorSnackBar(
