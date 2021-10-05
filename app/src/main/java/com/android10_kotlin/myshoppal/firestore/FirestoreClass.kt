@@ -7,6 +7,7 @@ import com.android10_kotlin.myshoppal.activities.LoginActivity
 import com.android10_kotlin.myshoppal.activities.RegisterActivity
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.utils.Constants
+import com.android10_kotlin.myshoppal.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -51,6 +52,7 @@ class FirestoreClass {
                 Log.i(activity.javaClass.simpleName, document.toString())
 
                 val user = document.toObject(User::class.java)!!
+                Utils.saveUserNameSharedPreferences(activity, user)
 
                 when (activity) {
                     is LoginActivity -> {
