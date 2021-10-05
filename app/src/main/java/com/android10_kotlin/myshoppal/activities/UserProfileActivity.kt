@@ -24,8 +24,6 @@ class UserProfileActivity : AppCompatActivity() {
             val userDetails: User =
                 intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)!!
             setEditTextFields(userDetails)
-        } else {
-            Toast.makeText(this, "Intent is empty", Toast.LENGTH_LONG).show()
         }
 
     }
