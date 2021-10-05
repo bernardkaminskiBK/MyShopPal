@@ -27,10 +27,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        if(view != null) {
-            when(view.id) {
+        if (view != null) {
+            when (view.id) {
                 R.id.tv_forgot_password -> {
-
+                    startActivity(Intent(this, ForgotPasswordActivity::class.java))
                 }
                 R.id.btn_login -> {
                     loginRegisteredUser()
