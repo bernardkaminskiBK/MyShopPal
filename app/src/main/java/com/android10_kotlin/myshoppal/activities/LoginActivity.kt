@@ -10,6 +10,7 @@ import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityLoginBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.User
+import com.android10_kotlin.myshoppal.utils.Constants
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -84,7 +85,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         hideProgressDialog()
 
         if (user.profileCompleted == 0) {
-            startActivity(Intent(this@LoginActivity, UserProfileActivity::class.java))
+            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            startActivity(intent)
         } else {
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         }

@@ -6,5 +6,6 @@ object Constants {
 
     const val MY_SHOP_PAL_PREFERENCES = "MyShopPalPrefs"
     const val LOGGED_IN_USERNAME = "logged_in_username"
+    const val EXTRA_USER_DETAILS = "extra_user_details"
 
 }
