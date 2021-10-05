@@ -101,20 +101,17 @@ class RegisterActivity : BaseActivity() {
             val password: String = mBinding.etPassword.text.toString().trim { it <= ' ' }
 
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(
-                    OnCompleteListener<AuthResult> { task ->
-                        if (task.isSuccessful) {
-                            val firebaseUser: FirebaseUser = task.result!!.user!!
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result!!.user!!
 
-                            saveUserToFirestore(firebaseUser)
+                        saveUserToFirestore(firebaseUser)
 
-//                            FirebaseAuth.getInstance().signOut()
-//                            finish()
-                        } else {
-                            hideProgressDialog()
-                            showErrorSnackBar(task.exception!!.message.toString(), true)
-                        }
-                    })
+                    } else {
+                        hideProgressDialog()
+                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                    }
+                }
         }
     }
 
@@ -131,6 +128,8 @@ class RegisterActivity : BaseActivity() {
     fun userRegistrationSuccess() {
         hideProgressDialog()
         Toast.makeText(this, getString(R.string.success_register), Toast.LENGTH_SHORT).show()
+        FirebaseAuth.getInstance().signOut()
+        finish()
     }
 
 }
