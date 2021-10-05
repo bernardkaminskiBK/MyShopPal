@@ -1,11 +1,12 @@
 package com.android10_kotlin.myshoppal.activities
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.Toast
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityRegisterBinding
+import com.android10_kotlin.myshoppal.firestore.FirestoreClass
+import com.android10_kotlin.myshoppal.models.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -93,9 +94,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     private fun registerUser() {
-
         if (validateRegisterDetails()) {
-
             showProgressDialog(getString(R.string.please_wait))
 
             val email: String = mBinding.etEmail.text.toString().trim { it <= ' ' }
@@ -104,19 +103,34 @@ class RegisterActivity : BaseActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
-                        hideProgressDialog()
                         if (task.isSuccessful) {
                             val firebaseUser: FirebaseUser = task.result!!.user!!
-                            showErrorSnackBar(
-                                "You are registered successfully. Your user id is ${firebaseUser.uid}",
-                                false
-                            )
-                            FirebaseAuth.getInstance().signOut()
-                            finish()
+
+                            saveUserToFirestore(firebaseUser)
+
+//                            FirebaseAuth.getInstance().signOut()
+//                            finish()
                         } else {
+                            hideProgressDialog()
                             showErrorSnackBar(task.exception!!.message.toString(), true)
                         }
                     })
         }
     }
+
+    private fun saveUserToFirestore(firebaseUser: FirebaseUser) {
+        val id: String = firebaseUser.uid
+        val firstName: String = mBinding.etFirstName.text.toString().trim { it <= ' ' }
+        val lastName: String = mBinding.etLastName.text.toString().trim { it <= ' ' }
+        val email: String = mBinding.etEmail.text.toString().trim { it <= ' ' }
+
+        val user = User(id, firstName, lastName, email)
+        FirestoreClass().registerUser(this@RegisterActivity, user)
+    }
+
+    fun userRegistrationSuccess() {
+        hideProgressDialog()
+        Toast.makeText(this, getString(R.string.success_register), Toast.LENGTH_SHORT).show()
+    }
+
 }

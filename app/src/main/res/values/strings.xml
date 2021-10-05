@@ -35,4 +35,6 @@
     <string name="btn_submit">submit</string>
     <string name="forgot_password_text">Enter your e-mail address we\'ll send you a email to reset your password</string>
     <string name="successfully_sent_email">Email sent successfully to reset your password!</string>
+    <string name="success_register">You are registered successfully.</string>
+    <string name="error_message">Error while registering the user.</string>
 </resources>

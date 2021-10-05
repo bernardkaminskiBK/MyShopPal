@@ -4,9 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityLoginBinding
+import com.android10_kotlin.myshoppal.firestore.FirestoreClass
+import com.android10_kotlin.myshoppal.models.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -66,16 +69,26 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             val password: String = mBinding.etPassword.text.toString().trim { it <= ' ' }
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(
-                    OnCompleteListener<AuthResult> { task ->
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        FirestoreClass().getUserDetails(this)
+                    } else {
                         hideProgressDialog()
-                        if (task.isSuccessful) {
-                            showErrorSnackBar("You are logged in successfully.", false)
-                        } else {
-                            showErrorSnackBar(task.exception!!.message.toString(), true)
-                        }
-                    })
+                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                    }
+                }
         }
+    }
+
+    fun userLoggedInSuccess(user: User) {
+        hideProgressDialog()
+
+        Log.i("First Name: ", user.firstName)
+        Log.i("Last Name: ", user.lastName)
+        Log.i("Email: ", user.email)
+
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 
 }
