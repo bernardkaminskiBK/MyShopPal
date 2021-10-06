@@ -1,36 +1,19 @@
 package com.android10_kotlin.myshoppal.activities
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
+import android.view.View
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityUserProfileBinding
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.utils.Constants
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
+import com.android10_kotlin.myshoppal.utils.Utils
 
-class UserProfileActivity : AppCompatActivity() {
+class UserProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBinding: ActivityUserProfileBinding
-
-    companion object {
-        private const val GALLERY = 1
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +28,20 @@ class UserProfileActivity : AppCompatActivity() {
             setEditTextFields(userDetails)
         }
 
-        mBinding.ivUserPhoto.setOnClickListener {
-            setUserProfileImage()
-        }
+        mBinding.ivUserPhoto.setOnClickListener(this)
+    }
 
+    override fun onClick(view: View?) {
+        view?.let {
+            when (it.id) {
+                R.id.iv_user_photo -> {
+                    setUserProfileImage()
+                }
+                R.id.btn_save -> {
+
+                }
+            }
+        }
     }
 
     private fun setupToolbar() {
@@ -61,28 +54,7 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun setUserProfileImage() {
-        Dexter.withContext(this@UserProfileActivity)
-            .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
-                    val galleryIntent =
-                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    @Suppress("DEPRECATION")
-                    startActivityForResult(galleryIntent, GALLERY)
-                }
-
-                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
-
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken?
-                ) {
-                   token?.continuePermissionRequest()
-                }
-
-            }).onSameThread().check()
+        Utils.askForReadPermission(this@UserProfileActivity)
     }
 
     private fun setEditTextFields(userDetails: User) {
@@ -99,36 +71,9 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == GALLERY) {
-            data?.let {
-                val selectedPhotoUri = data.data
-
-                Glide.with(this)
-                    .load(selectedPhotoUri)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .listener(object: RequestListener<Drawable>{
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-
-                            return false
-                        }
-                    }).into(mBinding.ivUserPhoto)
-            }
+        if (resultCode == Activity.RESULT_OK && requestCode == Constants.GALLERY) {
+            Utils.loadProfilePictureAndSaveToStorage(this, data, mBinding.ivUserPhoto)
         }
     }
+
 }
