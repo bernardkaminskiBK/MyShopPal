@@ -9,6 +9,7 @@ import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityUserProfileBinding
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.utils.Constants
+import com.android10_kotlin.myshoppal.utils.GlideLoader
 import com.android10_kotlin.myshoppal.utils.Utils
 
 class UserProfileActivity : AppCompatActivity(), View.OnClickListener {
@@ -72,7 +73,8 @@ class UserProfileActivity : AppCompatActivity(), View.OnClickListener {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == Constants.GALLERY) {
-            Utils.loadProfilePictureAndSaveToStorage(this, data, mBinding.ivUserPhoto)
+            GlideLoader(this)
+                .loadProfilePictureAndSaveToStorage(data, mBinding.ivUserPhoto)
         }
     }
 
