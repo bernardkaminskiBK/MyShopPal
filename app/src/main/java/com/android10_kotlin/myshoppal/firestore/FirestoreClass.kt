@@ -5,12 +5,14 @@ import android.util.Log
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.activities.LoginActivity
 import com.android10_kotlin.myshoppal.activities.RegisterActivity
+import com.android10_kotlin.myshoppal.activities.UserProfileActivity
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import java.util.HashMap
 
 class FirestoreClass {
 
@@ -70,6 +72,30 @@ class FirestoreClass {
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while getting user details.",
+                    e
+                )
+            }
+    }
+
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                when (activity) {
+                    is UserProfileActivity -> {
+                        activity.userProfileUpdateSuccess()
+                    }
+                }
+            }.addOnFailureListener { e ->
+                when (activity) {
+                    is UserProfileActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+                Log.e(
+                    activity.javaClass.simpleName,
+                    activity.getString(R.string.error_updating_message),
                     e
                 )
             }

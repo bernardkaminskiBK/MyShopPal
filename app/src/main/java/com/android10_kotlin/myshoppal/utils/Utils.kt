@@ -24,7 +24,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 
-object Utils : BaseActivity() {
+object Utils {
 
     private var sharedPreferences: SharedPreferences? = null
 

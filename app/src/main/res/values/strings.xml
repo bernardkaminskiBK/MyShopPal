@@ -37,10 +37,13 @@
     <string name="successfully_sent_email">Email sent successfully to reset your password!</string>
     <string name="success_register">You are registered successfully.</string>
     <string name="error_message">Error while registering the user.</string>
+    <string name="error_updating_message">Error while updating the user.</string>
 
     <string name="title_profile">PROFILE</string>
     <string name="et_hint_mobile_number">Mobile Number</string>
     <string name="rb_lbl_male">MALE</string>
     <string name="rb_lbl_female">FEMALE</string>
     <string name="btn_lbl_save">Save</string>
+    <string name="err_msg_mobile_number">Please enter mobile number.</string>
+    <string name="msg_profile_update_success">Your profile is updated successfully</string>
 </resources>
