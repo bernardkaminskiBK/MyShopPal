@@ -44,7 +44,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 R.id.btn_save -> {
                     if (validateUserProfileDetails()) {
-                        prepareUserDataAndSaveToStore()
+                        prepareUserDataAndSaveToDB()
                     }
                 }
                 else -> {
@@ -90,7 +90,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun prepareUserDataAndSaveToStore() {
+    private fun prepareUserDataAndSaveToDB() {
         val userHashMap = HashMap<String, Any>()
         val mobileNumber = mBinding.etMobileNumber.text.toString().trim() { it <= ' ' }
         val gender = if (mBinding.rbMale.isChecked) {
