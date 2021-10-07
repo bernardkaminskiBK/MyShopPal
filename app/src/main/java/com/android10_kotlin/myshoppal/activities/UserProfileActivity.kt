@@ -2,6 +2,7 @@ package com.android10_kotlin.myshoppal.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -19,6 +20,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mBinding: ActivityUserProfileBinding
 
     private var mUserDetails: User? = null
+    private var mSelectedProfilePicUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 R.id.btn_save -> {
                     if (validateUserProfileDetails()) {
+                        FirestoreClass().uploadImageToCloudStorage(this, mSelectedProfilePicUri)
                         prepareUserDataAndSaveToDB()
                     }
                 }
@@ -108,6 +111,18 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         FirestoreClass().updateUserProfileData(this, userHashMap)
     }
 
+    fun imageUploadSuccess(imageURL: String) {
+        hideProgressDialog()
+        val userHashMap = HashMap<String, Any>()
+        userHashMap[Constants.IMAGE] = imageURL
+        FirestoreClass().updateUserProfileData(this, userHashMap)
+        Toast.makeText(
+            this,
+            "Your image is uploaded successfully. Image URL is $imageURL",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     fun userProfileUpdateSuccess() {
         hideProgressDialog()
         Toast.makeText(this, getString(R.string.msg_profile_update_success), Toast.LENGTH_SHORT)
@@ -121,8 +136,9 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == Constants.GALLERY) {
+            mSelectedProfilePicUri = data!!.data
             GlideLoader(this)
-                .loadProfilePictureAndSaveToStorage(data, mBinding.ivUserPhoto)
+                .loadPictureIntoView(mSelectedProfilePicUri, mBinding.ivUserPhoto)
         }
     }
 

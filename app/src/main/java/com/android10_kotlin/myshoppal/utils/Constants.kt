@@ -9,6 +9,9 @@ object Constants {
 
     const val MOBILE = "mobile"
     const val GENDER = "gender"
+    const val USER_PROFILE_IMAGE = "user_profile_image"
+
+    const val IMAGE = "image"
 
     const val GALLERY = 1
 

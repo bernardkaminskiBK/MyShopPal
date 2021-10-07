@@ -3,6 +3,7 @@ package com.android10_kotlin.myshoppal.utils
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
@@ -19,63 +20,16 @@ import com.google.firebase.storage.StorageReference
 
 class GlideLoader(val context: Context) {
 
-    fun loadProfilePictureAndSaveToStorage(data: Intent?, imageView: ImageView) {
-        data?.let {
-            val selectedPhotoUri = data.data
+    fun loadPictureIntoView(picture: Uri?, imageView: ImageView) {
+        picture?.let {
             Glide.with(context)
-                .load(selectedPhotoUri)
+                .load(picture)
                 .centerCrop()
                 .placeholder(R.drawable.ic_user_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        Log.e(context.javaClass.simpleName, "Failed load the picture")
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        val imageExtension = MimeTypeMap.getSingleton()
-                            .getExtensionFromMimeType(
-                                context.contentResolver.getType(
-                                    selectedPhotoUri!!
-                                )
-                            )
-
-                        val sRef: StorageReference =
-                            FirebaseStorage.getInstance()
-                                .reference.child("Image " + System.currentTimeMillis() + "." + imageExtension)
-
-                        sRef.putFile(selectedPhotoUri)
-                            .addOnSuccessListener { taskSnapshot ->
-                                taskSnapshot.metadata!!.reference!!.downloadUrl
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            context,
-                                            "Your image was uploaded successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }.addOnFailureListener {
-                                        Toast.makeText(
-                                            context,
-                                            it.message,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                            }
-                        return false
-                    }
-                }).into(imageView)
+                .into(imageView)
         }
     }
+
+
 }
