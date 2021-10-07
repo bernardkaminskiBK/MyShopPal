@@ -22,6 +22,8 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     private var mUserDetails: User? = null
     private var mSelectedProfilePicUri: Uri? = null
 
+    private var mUserImageURL: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityUserProfileBinding.inflate(layoutInflater)
@@ -46,8 +48,12 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 R.id.btn_save -> {
                     if (validateUserProfileDetails()) {
-                        FirestoreClass().uploadImageToCloudStorage(this, mSelectedProfilePicUri)
-                        prepareUserDataAndSaveToDB()
+                        showProgressDialog(getString(R.string.please_wait))
+                        if (mSelectedProfilePicUri != null) {
+                            FirestoreClass().uploadImageToCloudStorage(this, mSelectedProfilePicUri)
+                        } else {
+                            prepareUserDataAndSaveToDB()
+                        }
                     }
                 }
                 else -> {
@@ -102,25 +108,21 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             Constants.FEMALE
         }
 
+        if (mUserImageURL.isNotEmpty()) {
+            userHashMap[Constants.IMAGE] = mUserImageURL
+        }
+
         if (mobileNumber.isNotEmpty()) {
             userHashMap[Constants.MOBILE] = mobileNumber
         }
         userHashMap[Constants.GENDER] = gender
-
-        showProgressDialog(getString(R.string.please_wait))
+        userHashMap[Constants.COMPLETE_PROFILE] = 1
         FirestoreClass().updateUserProfileData(this, userHashMap)
     }
 
     fun imageUploadSuccess(imageURL: String) {
-        hideProgressDialog()
-        val userHashMap = HashMap<String, Any>()
-        userHashMap[Constants.IMAGE] = imageURL
-        FirestoreClass().updateUserProfileData(this, userHashMap)
-        Toast.makeText(
-            this,
-            "Your image is uploaded successfully. Image URL is $imageURL",
-            Toast.LENGTH_SHORT
-        ).show()
+        mUserImageURL = imageURL
+        prepareUserDataAndSaveToDB()
     }
 
     fun userProfileUpdateSuccess() {
