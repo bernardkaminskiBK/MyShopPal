@@ -1,4 +1,4 @@
-package com.android10_kotlin.myshoppal.activities
+package com.android10_kotlin.myshoppal.ui.activities
 
 import android.app.Activity
 import android.content.Intent

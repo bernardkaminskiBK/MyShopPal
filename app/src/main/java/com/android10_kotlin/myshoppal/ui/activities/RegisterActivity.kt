@@ -1,4 +1,4 @@
-package com.android10_kotlin.myshoppal.activities
+package com.android10_kotlin.myshoppal.ui.activities
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -7,8 +7,6 @@ import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityRegisterBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.User
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 

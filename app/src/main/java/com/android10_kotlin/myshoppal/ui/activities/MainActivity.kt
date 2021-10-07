@@ -1,4 +1,4 @@
-package com.android10_kotlin.myshoppal.activities
+package com.android10_kotlin.myshoppal.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

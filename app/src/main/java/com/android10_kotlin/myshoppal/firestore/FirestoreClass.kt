@@ -4,9 +4,9 @@ import android.app.Activity
 import android.net.Uri
 import android.util.Log
 import com.android10_kotlin.myshoppal.R
-import com.android10_kotlin.myshoppal.activities.LoginActivity
-import com.android10_kotlin.myshoppal.activities.RegisterActivity
-import com.android10_kotlin.myshoppal.activities.UserProfileActivity
+import com.android10_kotlin.myshoppal.ui.activities.LoginActivity
+import com.android10_kotlin.myshoppal.ui.activities.RegisterActivity
+import com.android10_kotlin.myshoppal.ui.activities.UserProfileActivity
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils

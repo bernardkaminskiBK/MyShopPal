@@ -1,20 +1,15 @@
-package com.android10_kotlin.myshoppal.activities
+package com.android10_kotlin.myshoppal.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityLoginBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.utils.Constants
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
 

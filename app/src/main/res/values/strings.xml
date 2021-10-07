@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyShopPal</string>
+    <string name="app_name">My Shop Pal</string>
     <string name="my_shop_pal">My shop pal</string>
 
     <string name="content_description">image</string>
@@ -46,4 +46,10 @@
     <string name="btn_lbl_save">Save</string>
     <string name="err_msg_mobile_number">Please enter mobile number.</string>
     <string name="msg_profile_update_success">Your profile is updated successfully</string>
+    
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="please_click_back_again_to_exit">Please click back again to exit</string>
 </resources>
