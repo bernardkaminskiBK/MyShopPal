@@ -7,7 +7,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityDashboardBinding
-import com.android10_kotlin.myshoppal.ui.activities.BaseActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class DashboardActivity : BaseActivity() {
@@ -20,24 +19,29 @@ class DashboardActivity : BaseActivity() {
         setContentView(mBinding.root)
 
         setSupportActionBar(mBinding.dashboardToolbar)
+        setNavController()
+    }
 
+    private fun setNavController() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home,
+                R.id.navigation_products,
                 R.id.navigation_dashboard,
-                R.id.navigation_notifications
+                R.id.navigation_orders
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-
         navView.setupWithNavController(navController)
     }
 
     override fun onBackPressed() {
         doubleBackToExit()
+    }
+
+    fun setToolbarTitle(title: String) {
+        mBinding.toolbarTitle.text = title
     }
 
 }

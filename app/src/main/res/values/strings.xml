@@ -46,10 +46,10 @@
     <string name="btn_lbl_save">Save</string>
     <string name="err_msg_mobile_number">Please enter mobile number.</string>
     <string name="msg_profile_update_success">Your profile is updated successfully</string>
-    
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <string name="please_click_back_again_to_exit">Please click back again to exit</string>
+    <string name="products_title">Products</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="orders_title">Orders</string>
+    <string name="settings">Settings</string>
 </resources>

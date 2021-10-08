@@ -11,22 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
-        <activity android:name="com.android10_kotlin.myshoppal.ui.activities.DashboardActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.SettingsActivity"></activity>
         <activity
-            android:name="com.android10_kotlin.myshoppal.ui.activities.UserProfileActivity"
+            android:name=".ui.activities.DashboardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android10_kotlin.myshoppal.ui.activities.ForgotPasswordActivity"
+            android:name=".ui.activities.UserProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android10_kotlin.myshoppal.ui.activities.RegisterActivity"
+            android:name=".ui.activities.ForgotPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android10_kotlin.myshoppal.ui.activities.LoginActivity"
+            android:name=".ui.activities.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.android10_kotlin.myshoppal.ui.activities.SplashScreenActivity"
+            android:name=".ui.activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.android10_kotlin.myshoppal.ui.activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
