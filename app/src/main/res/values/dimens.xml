@@ -38,7 +38,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="header_image_height">200dp</dimen>
-    <dimen name="settings_user_image_size">150dp</dimen>
+    <dimen name="settings_user_image_size">170dp</dimen>
     <dimen name="settings_user_image_marginTop">-75dp</dimen>
     <dimen name="settings_user_picture_margin">3dp</dimen>
     <dimen name="grey_border_stroke_size">1dp</dimen>

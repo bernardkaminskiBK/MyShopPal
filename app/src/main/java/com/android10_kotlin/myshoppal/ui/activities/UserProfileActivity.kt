@@ -77,6 +77,10 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setEditTextFields(userDetails: User) {
+        if (mUserDetails!!.image.isNotEmpty()) {
+            GlideLoader(this).loadPictureIntoView(mUserDetails!!.image, mBinding.ivUserPhoto)
+        }
+
         mBinding.etFirstName.isEnabled = false
         mBinding.etFirstName.setText(userDetails.firstName)
 
@@ -130,7 +134,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         Toast.makeText(this, getString(R.string.msg_profile_update_success), Toast.LENGTH_SHORT)
             .show()
 
-        startActivity(Intent(this@UserProfileActivity, MainActivity::class.java))
+        startActivity(Intent(this@UserProfileActivity, DashboardActivity::class.java))
         finish()
     }
 

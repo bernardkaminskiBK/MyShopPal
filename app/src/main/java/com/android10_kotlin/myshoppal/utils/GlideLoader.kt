@@ -20,7 +20,7 @@ import com.google.firebase.storage.StorageReference
 
 class GlideLoader(val context: Context) {
 
-    fun loadPictureIntoView(picture: Uri?, imageView: ImageView) {
+    fun loadPictureIntoView(picture: Any?, imageView: ImageView) {
         picture?.let {
             Glide.with(context)
                 .load(picture)

@@ -8,6 +8,7 @@ import com.android10_kotlin.myshoppal.ui.activities.LoginActivity
 import com.android10_kotlin.myshoppal.ui.activities.RegisterActivity
 import com.android10_kotlin.myshoppal.ui.activities.UserProfileActivity
 import com.android10_kotlin.myshoppal.models.User
+import com.android10_kotlin.myshoppal.ui.activities.SettingsActivity
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
@@ -63,11 +64,18 @@ class FirestoreClass {
                     is LoginActivity -> {
                         activity.userLoggedInSuccess(user)
                     }
+                    is SettingsActivity -> {
+                        activity.userDetailsSuccess(user)
+                    }
                 }
+
             }
             .addOnFailureListener { e ->
                 when (activity) {
                     is LoginActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is SettingsActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
