@@ -58,4 +58,11 @@
     <string name="lbl_addresses">Addresses</string>
     <string name="btn_lbl_logout">Logout</string>
     <string name="title_complete_profile">Complete user profile</string>
+    <string name="add_your_product">Add your product</string>
+    <string name="add_product">Add product</string>
+    <string name="product_title">Product title</string>
+    <string name="product_price">Product price ($)</string>
+    <string name="product_description">Product Description</string>
+    <string name="product_quantity">Product Quantiy</string>
+    <string name="btn_add_product_text">Submit</string>
 </resources>

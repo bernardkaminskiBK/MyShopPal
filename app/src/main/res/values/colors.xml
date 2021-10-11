@@ -28,4 +28,6 @@
 
     <color name="colorBorder">#E8E6E6</color>
     <color name="colorDarkGrey">#878787</color>
+    <color name="add_product_placeholder_color">#E1E1E1</color>
+    <color name="edit_text_color_hint">#E1E1E1</color>
 </resources>

@@ -14,7 +14,7 @@ class MSPButton(context: Context, attributeSet: AttributeSet) :
 
     private fun applyFont() {
         val typeFace: Typeface =
-            Typeface.createFromAsset(context.assets, "Montserrat-Regular.ttf")
+            Typeface.createFromAsset(context.assets, "Montserrat-Bold.ttf")
         typeface = typeFace
     }
 
