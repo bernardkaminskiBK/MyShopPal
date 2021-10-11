@@ -29,11 +29,9 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         mBinding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        setupToolbar()
-
         if (intent.hasExtra(Constants.EXTRA_USER_DETAILS)) {
             mUserDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAILS)
-            setEditTextFields(mUserDetails!!)
+            setUserDataToUserProfileUI(mUserDetails!!)
         }
 
         mBinding.ivUserPhoto.setOnClickListener(this)
@@ -76,19 +74,32 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         Utils.askForReadPermission(this@UserProfileActivity)
     }
 
-    private fun setEditTextFields(userDetails: User) {
-        if (mUserDetails!!.image.isNotEmpty()) {
+    private fun setUserDataToUserProfileUI(userDetails: User) {
+        if (mUserDetails!!.profileCompleted == 0) {
+            mBinding.tvToolbarTitle.text = getString(R.string.title_complete_profile)
+
+            mBinding.etFirstName.isEnabled = false
+            mBinding.etFirstName.setText(userDetails.firstName)
+
+            mBinding.etLastName.isEnabled = false
+            mBinding.etLastName.setText(userDetails.lastName)
+
+            mBinding.etEmail.isEnabled = false
+            mBinding.etEmail.setText(userDetails.email)
+        } else {
+            setupToolbar()
             GlideLoader(this).loadPictureIntoView(mUserDetails!!.image, mBinding.ivUserPhoto)
+            mBinding.etFirstName.setText(userDetails.firstName)
+            mBinding.etLastName.setText(userDetails.lastName)
+            mBinding.etEmail.setText(userDetails.email)
+            mBinding.etMobileNumber.setText(userDetails.mobile)
+            if (userDetails.gender == Constants.MALE) {
+                mBinding.rbMale.isChecked = true
+            } else {
+                mBinding.rbFemale.isChecked = true
+            }
         }
 
-        mBinding.etFirstName.isEnabled = false
-        mBinding.etFirstName.setText(userDetails.firstName)
-
-        mBinding.etLastName.isEnabled = false
-        mBinding.etLastName.setText(userDetails.lastName)
-
-        mBinding.etEmail.isEnabled = false
-        mBinding.etEmail.setText(userDetails.email)
     }
 
     private fun validateUserProfileDetails(): Boolean {
@@ -105,21 +116,33 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
     private fun prepareUserDataAndSaveToDB() {
         val userHashMap = HashMap<String, Any>()
-        val mobileNumber = mBinding.etMobileNumber.text.toString().trim() { it <= ' ' }
-        val gender = if (mBinding.rbMale.isChecked) {
-            Constants.MALE
-        } else {
-            Constants.FEMALE
-        }
 
         if (mUserImageURL.isNotEmpty()) {
             userHashMap[Constants.IMAGE] = mUserImageURL
         }
 
-        if (mobileNumber.isNotEmpty()) {
+        val firstName = mBinding.etFirstName.text.toString().trim() {it <= ' '}
+        if(firstName != mUserDetails!!.firstName) {
+            userHashMap[Constants.FIRST_NAME] = firstName
+        }
+
+        val lastName = mBinding.etLastName.text.toString().trim() {it <= ' '}
+        if(lastName != mUserDetails!!.lastName) {
+            userHashMap[Constants.LAST_NAME] = lastName
+        }
+
+        val mobileNumber = mBinding.etMobileNumber.text.toString().trim() { it <= ' ' }
+        if (mobileNumber.isNotEmpty() && mobileNumber != mUserDetails!!.mobile.toString()) {
             userHashMap[Constants.MOBILE] = mobileNumber
         }
+
+        val gender = if (mBinding.rbMale.isChecked) {
+            Constants.MALE
+        } else {
+            Constants.FEMALE
+        }
         userHashMap[Constants.GENDER] = gender
+
         userHashMap[Constants.COMPLETE_PROFILE] = 1
         FirestoreClass().updateUserProfileData(this, userHashMap)
     }

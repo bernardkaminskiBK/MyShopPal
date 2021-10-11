@@ -7,6 +7,9 @@ object Constants {
     const val MALE = "male"
     const val FEMALE = "female"
 
+    const val FIRST_NAME = "firstName"
+    const val LAST_NAME = "lastName"
+
     const val MOBILE = "mobile"
     const val GENDER = "gender"
     const val IMAGE = "image"

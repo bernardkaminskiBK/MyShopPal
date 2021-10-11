@@ -16,10 +16,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tvToolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="start|center"
+            android:fontFamily="@font/baloo"
             android:text="@string/title_profile"
             android:textColor="@color/white"
             android:textSize="@dimen/toolbar_title_text_size"
