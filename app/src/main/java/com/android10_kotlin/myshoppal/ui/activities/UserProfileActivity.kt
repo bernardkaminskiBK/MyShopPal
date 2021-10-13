@@ -48,7 +48,12 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                     if (validateUserProfileDetails()) {
                         showProgressDialog(getString(R.string.please_wait))
                         if (mSelectedProfilePicUri != null) {
-                            FirestoreClass().uploadImageToCloudStorage(this, mSelectedProfilePicUri)
+                            FirestoreClass()
+                                .uploadImageToCloudStorage(
+                                    this,
+                                    mSelectedProfilePicUri,
+                                    Constants.USER_PROFILE_IMAGE
+                                )
                         } else {
                             prepareUserDataAndSaveToDB()
                         }
@@ -121,13 +126,13 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             userHashMap[Constants.IMAGE] = mUserImageURL
         }
 
-        val firstName = mBinding.etFirstName.text.toString().trim() {it <= ' '}
-        if(firstName != mUserDetails!!.firstName) {
+        val firstName = mBinding.etFirstName.text.toString().trim() { it <= ' ' }
+        if (firstName != mUserDetails!!.firstName) {
             userHashMap[Constants.FIRST_NAME] = firstName
         }
 
-        val lastName = mBinding.etLastName.text.toString().trim() {it <= ' '}
-        if(lastName != mUserDetails!!.lastName) {
+        val lastName = mBinding.etLastName.text.toString().trim() { it <= ' ' }
+        if (lastName != mUserDetails!!.lastName) {
             userHashMap[Constants.LAST_NAME] = lastName
         }
 

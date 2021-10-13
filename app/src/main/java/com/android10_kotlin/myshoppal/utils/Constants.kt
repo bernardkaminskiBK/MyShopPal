@@ -16,6 +16,7 @@ object Constants {
     const val COMPLETE_PROFILE = "profileCompleted"
 
     const val USER_PROFILE_IMAGE = "user_profile_image"
+    const val PRODUCT_IMAGE = "product_image"
 
     const val GALLERY = 1
 

@@ -4,11 +4,8 @@ import android.app.Activity
 import android.net.Uri
 import android.util.Log
 import com.android10_kotlin.myshoppal.R
-import com.android10_kotlin.myshoppal.ui.activities.LoginActivity
-import com.android10_kotlin.myshoppal.ui.activities.RegisterActivity
-import com.android10_kotlin.myshoppal.ui.activities.UserProfileActivity
 import com.android10_kotlin.myshoppal.models.User
-import com.android10_kotlin.myshoppal.ui.activities.SettingsActivity
+import com.android10_kotlin.myshoppal.ui.activities.*
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
@@ -112,11 +109,11 @@ class FirestoreClass {
             }
     }
 
-    fun uploadImageToCloudStorage(activity: Activity, imageFileUri: Uri?) {
+    fun uploadImageToCloudStorage(activity: Activity, imageFileUri: Uri?, imageType: String) {
         val imageExtension = Utils.getImageExtension(activity, imageFileUri)
         val sRef: StorageReference =
             FirebaseStorage.getInstance()
-                .reference.child(Constants.USER_PROFILE_IMAGE + System.currentTimeMillis() + "." + imageExtension)
+                .reference.child(imageType + System.currentTimeMillis() + "." + imageExtension)
 
         sRef.putFile(imageFileUri!!).addOnSuccessListener { taskSnapshot ->
             Log.e(
@@ -131,11 +128,17 @@ class FirestoreClass {
                         is UserProfileActivity -> {
                             activity.imageUploadSuccess(uri.toString())
                         }
+                        is AddProductActivity -> {
+                            activity.imageUploadSuccess(uri.toString())
+                        }
                     }
                 }
         }.addOnFailureListener {
             when (activity) {
                 is UserProfileActivity -> {
+                    activity.hideProgressDialog()
+                }
+                is AddProductActivity -> {
                     activity.hideProgressDialog()
                 }
             }

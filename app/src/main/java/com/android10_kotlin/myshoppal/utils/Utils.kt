@@ -72,6 +72,4 @@ object Utils {
             .getExtensionFromMimeType(context.contentResolver.getType(picUri!!))
     }
 
-
-
 }

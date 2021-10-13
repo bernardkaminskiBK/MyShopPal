@@ -3,13 +3,13 @@ package com.android10_kotlin.myshoppal.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityAddProductBinding
+import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 import com.android10_kotlin.myshoppal.utils.Utils
@@ -46,8 +46,8 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                     Utils.askForReadPermissionToSavePhoto(this)
                 }
                 R.id.btn_add_product -> {
-                    if(validateProductDetails()) {
-
+                    if (validateProductDetails()) {
+                        uploadProductImage()
                     }
                 }
                 else -> {
@@ -55,6 +55,15 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun uploadProductImage() {
+        showProgressDialog(getString(R.string.please_wait))
+        FirestoreClass().uploadImageToCloudStorage(
+            this,
+            mSelectedProductPicUri,
+            Constants.PRODUCT_IMAGE
+        )
     }
 
     @Suppress("DEPRECATION")
@@ -109,5 +118,9 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    fun imageUploadSuccess(imageUrl: String) {
+        hideProgressDialog()
+        showErrorSnackBar("Product image was uplodaed successfully. Image URI: $imageUrl", false)
+    }
 
 }
