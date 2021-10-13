@@ -3,6 +3,7 @@ package com.android10_kotlin.myshoppal.utils
 object Constants {
 
     const val USERS = "users"
+    const val PRODUCTS = "products"
 
     const val MALE = "male"
     const val FEMALE = "female"
@@ -15,8 +16,14 @@ object Constants {
     const val IMAGE = "image"
     const val COMPLETE_PROFILE = "profileCompleted"
 
-    const val USER_PROFILE_IMAGE = "user_profile_image"
-    const val PRODUCT_IMAGE = "product_image"
+    const val PRODUCT_IMAGE = "productImage"
+    const val TITLE = "title"
+    const val PRICE = "price"
+    const val DESCRIPTION = "description"
+    const val QUANTITY = "quantity"
+
+    const val USER_PROFILE_TYPE_IMAGE = "user_profile_image"
+    const val PRODUCT_TYPE_IMAGE = "product_image"
 
     const val GALLERY = 1
 

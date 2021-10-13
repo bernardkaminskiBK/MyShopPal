@@ -4,6 +4,7 @@ import android.app.Activity
 import android.net.Uri
 import android.util.Log
 import com.android10_kotlin.myshoppal.R
+import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.ui.activities.*
 import com.android10_kotlin.myshoppal.utils.Constants
@@ -36,7 +37,7 @@ class FirestoreClass {
             }
     }
 
-    private fun getCurrentUserID(): String {
+    fun getCurrentUserID(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         var currentUserID = ""
@@ -146,4 +147,16 @@ class FirestoreClass {
         }
 
     }
+
+    fun uploadProductDetails(activity: AddProductActivity, productInfo: Product) {
+            mFireStore.collection(Constants.PRODUCTS)
+                .document()
+                .set(productInfo, SetOptions.merge())
+                .addOnSuccessListener {
+                    activity.productUploadSuccess()
+                }.addOnFailureListener {
+                    Log.e(activity.javaClass.simpleName, it.message.toString(), it)
+                }
+    }
+
 }

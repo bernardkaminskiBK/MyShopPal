@@ -52,7 +52,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                                 .uploadImageToCloudStorage(
                                     this,
                                     mSelectedProfilePicUri,
-                                    Constants.USER_PROFILE_IMAGE
+                                    Constants.USER_PROFILE_TYPE_IMAGE
                                 )
                         } else {
                             prepareUserDataAndSaveToDB()

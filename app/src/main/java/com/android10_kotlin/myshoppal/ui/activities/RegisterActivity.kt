@@ -103,7 +103,7 @@ class RegisterActivity : BaseActivity() {
                     if (task.isSuccessful) {
                         val firebaseUser: FirebaseUser = task.result!!.user!!
 
-                        saveUserToFirestore(firebaseUser)
+                        saveUserToFirebase(firebaseUser)
 
                     } else {
                         hideProgressDialog()
@@ -113,7 +113,7 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-    private fun saveUserToFirestore(firebaseUser: FirebaseUser) {
+    private fun saveUserToFirebase(firebaseUser: FirebaseUser) {
         val id: String = firebaseUser.uid
         val firstName: String = mBinding.etFirstName.text.toString().trim { it <= ' ' }
         val lastName: String = mBinding.etLastName.text.toString().trim { it <= ' ' }

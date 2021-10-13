@@ -6,10 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityAddProductBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
+import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 import com.android10_kotlin.myshoppal.utils.Utils
@@ -17,7 +19,9 @@ import com.android10_kotlin.myshoppal.utils.Utils
 class AddProductActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var mBinding: ActivityAddProductBinding
+
     private var mSelectedProductPicUri: Uri? = null
+    private var mProductImageURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +66,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         FirestoreClass().uploadImageToCloudStorage(
             this,
             mSelectedProductPicUri,
-            Constants.PRODUCT_IMAGE
+            Constants.PRODUCT_TYPE_IMAGE
         )
     }
 
@@ -118,9 +122,29 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    fun productUploadSuccess() {
+        hideProgressDialog()
+        Toast.makeText(this, "Your product was uploaded successfully", Toast.LENGTH_LONG).show()
+        finish()
+    }
+
     fun imageUploadSuccess(imageUrl: String) {
         hideProgressDialog()
-        showErrorSnackBar("Product image was uplodaed successfully. Image URI: $imageUrl", false)
+        mProductImageURL = imageUrl
+
+        saveProductToFirebase()
+    }
+
+    private fun saveProductToFirebase() {
+        val id = FirestoreClass().getCurrentUserID()
+        val userName = Utils.getUserNameSharedPreferences(this)
+        val title = mBinding.etProductTitle.text.toString().trim { it <= ' ' }
+        val price = mBinding.etProductPrice.text.toString().trim { it <= ' ' }
+        val description = mBinding.etProductDescription.text.toString().trim { it <= ' ' }
+        val quantity = mBinding.etProductQuantity.text.toString().trim { it <= ' ' }
+
+        val product = Product(id, userName, title, price, description, quantity, mProductImageURL)
+        FirestoreClass().uploadProductDetails(this, product)
     }
 
 }
