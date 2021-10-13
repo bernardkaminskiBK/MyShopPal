@@ -38,14 +38,14 @@ object Utils {
         return sharedPreferences.getString(Constants.LOGGED_IN_USERNAME, "")!!
     }
 
-    fun showImageChooser(activity: Activity) {
+    private fun showImageChooser(activity: Activity) {
         val galleryIntent =
             Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         @Suppress("DEPRECATION")
         activity.startActivityForResult(galleryIntent, Constants.GALLERY)
     }
 
-    fun askForReadPermission(activity: Activity) {
+    fun askForReadPermissionToSavePhoto(activity: Activity) {
         Dexter.withContext(activity)
             .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             .withListener(object : PermissionListener {
@@ -71,5 +71,7 @@ object Utils {
         return MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(context.contentResolver.getType(picUri!!))
     }
+
+
 
 }

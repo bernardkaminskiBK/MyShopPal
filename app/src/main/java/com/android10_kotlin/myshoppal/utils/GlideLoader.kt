@@ -17,17 +17,22 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.io.IOException
 
 class GlideLoader(val context: Context) {
 
     fun loadPictureIntoView(picture: Any?, imageView: ImageView) {
         picture?.let {
-            Glide.with(context)
-                .load(picture)
-                .centerCrop()
-                .placeholder(R.drawable.ic_user_placeholder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(imageView)
+            try {
+                Glide.with(context)
+                    .load(picture)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_user_placeholder)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
     }
 

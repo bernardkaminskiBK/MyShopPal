@@ -71,7 +71,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setUserProfileImage() {
-        Utils.askForReadPermission(this@UserProfileActivity)
+        Utils.askForReadPermissionToSavePhoto(this@UserProfileActivity)
     }
 
     private fun setUserDataToUserProfileUI(userDetails: User) {
