@@ -65,4 +65,11 @@
     <string name="product_description">Product Description</string>
     <string name="product_quantity">Product Quantiy</string>
     <string name="btn_add_product_text">Submit</string>
+
+    <string name="err_msg_select_product_image">Please select product image.</string>
+    <string name="err_msg_enter_product_title">Please enter product title.</string>
+    <string name="err_msg_enter_product_price">Please enter product price.</string>
+    <string name="err_msg_enter_product_description">Please enter product description.</string>
+    <string name="err_msg_enter_product_quantity">Please enter product quantity.</string>
+
 </resources>

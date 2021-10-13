@@ -67,13 +67,6 @@
                     android:padding="16dp"
                     app:srcCompat="@drawable/ic_baseline_add_a_photo_34" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_edit_product_image"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="end|bottom"-->
-<!--                    android:padding="16dp"-->
-<!--                    app:srcCompat="@drawable/ic_baseline_edit_34" />-->
             </FrameLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -133,7 +126,7 @@
                 app:layout_constraintTop_toBottomOf="@id/til_product_price">
 
                 <com.android10_kotlin.myshoppal.utils.MSPEditText
-                    android:id="@+id/et_category"
+                    android:id="@+id/etProductDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
