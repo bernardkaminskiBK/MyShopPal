@@ -1,4 +1,4 @@
-package com.android10_kotlin.myshoppal.ui.fragments.orders
+package com.android10_kotlin.myshoppal.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

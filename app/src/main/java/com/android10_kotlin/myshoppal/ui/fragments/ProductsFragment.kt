@@ -1,13 +1,14 @@
-package com.android10_kotlin.myshoppal.ui.fragments.products
+package com.android10_kotlin.myshoppal.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.FragmentProductsBinding
+import com.android10_kotlin.myshoppal.firestore.FirestoreClass
+import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.ui.activities.AddProductActivity
 import com.android10_kotlin.myshoppal.ui.activities.DashboardActivity
-import com.android10_kotlin.myshoppal.ui.fragments.BaseFragment
 
 class ProductsFragment : BaseFragment() {
 
@@ -46,6 +47,21 @@ class ProductsFragment : BaseFragment() {
         if (requireActivity() is DashboardActivity) {
             (activity as DashboardActivity?)?.setToolbarTitle(getString(R.string.products_title))
         }
+    }
+
+    fun successProductsListFromFirestore(productsList: ArrayList<Product>) {
+        hideProgressDialog()
+
+    }
+
+    private fun getProductsListFromFirestore() {
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().getProductList(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getProductsListFromFirestore()
     }
 
 }

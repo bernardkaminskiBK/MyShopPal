@@ -3,10 +3,12 @@ package com.android10_kotlin.myshoppal.firestore
 import android.app.Activity
 import android.net.Uri
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.ui.activities.*
+import com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
@@ -149,14 +151,38 @@ class FirestoreClass {
     }
 
     fun uploadProductDetails(activity: AddProductActivity, productInfo: Product) {
-            mFireStore.collection(Constants.PRODUCTS)
-                .document()
-                .set(productInfo, SetOptions.merge())
-                .addOnSuccessListener {
-                    activity.productUploadSuccess()
-                }.addOnFailureListener {
-                    Log.e(activity.javaClass.simpleName, it.message.toString(), it)
+        mFireStore.collection(Constants.PRODUCTS)
+            .document()
+            .set(productInfo, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.productUploadSuccess()
+            }.addOnFailureListener {
+                Log.e(activity.javaClass.simpleName, it.message.toString(), it)
+            }
+    }
+
+    fun getProductList(fragment: Fragment) {
+        mFireStore.collection(Constants.PRODUCTS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                Log.e("Products list", document.documents.toString())
+                val productsList: ArrayList<Product> = ArrayList()
+                for(i in document.documents) {
+                    val product = i.toObject(Product::class.java)
+                    product!!.id = i.id
+
+                    productsList.add(product)
                 }
+
+                when(fragment) {
+                    is ProductsFragment -> {
+                        fragment.successProductsListFromFirestore(productsList)
+                    }
+                }
+            }.addOnFailureListener {
+                Log.e(fragment.requireActivity().javaClass.simpleName, it.message.toString(), it)
+            }
     }
 
 }

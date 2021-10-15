@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_products"
-        android:name="com.android10_kotlin.myshoppal.ui.fragments.products.ProductsFragment"
+        android:name="com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment"
         android:label="@string/products_title"
         tools:layout="@layout/fragment_products" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.android10_kotlin.myshoppal.ui.fragments.dashboard.DashboardFragment"
+        android:name="com.android10_kotlin.myshoppal.ui.fragments.DashboardFragment"
         android:label="@string/dashboard_title"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_orders"
-        android:name="com.android10_kotlin.myshoppal.ui.fragments.orders.OrdersFragment"
+        android:name="com.android10_kotlin.myshoppal.ui.fragments.OrdersFragment"
         android:label="@string/orders_title"
         tools:layout="@layout/fragment_orders" />
 

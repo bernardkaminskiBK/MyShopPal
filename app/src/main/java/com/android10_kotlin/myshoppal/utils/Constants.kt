@@ -31,4 +31,6 @@ object Constants {
     const val LOGGED_IN_USERNAME = "logged_in_username"
     const val EXTRA_USER_DETAILS = "extra_user_details"
 
+    const val USER_ID = "user_id"
+
 }
