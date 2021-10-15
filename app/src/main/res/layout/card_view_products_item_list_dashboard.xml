@@ -64,10 +64,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
             android:padding="5dp"
+            android:drawableStart="@drawable/ic_baseline_shopping_cart_24"
             android:fontFamily="@font/baloo"
-            android:text="ADD TO CART"
+            android:text="@string/add_to_cart"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp">
+
+        </androidx.appcompat.widget.AppCompatButton>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

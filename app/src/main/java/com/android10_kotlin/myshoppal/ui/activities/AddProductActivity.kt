@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityAddProductBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
@@ -28,7 +27,8 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         mBinding = ActivityAddProductBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        mBinding.ivAddUpdateProductImage.setOnClickListener(this)
+        mBinding.ivAddProductImage.setOnClickListener(this)
+        mBinding.ivEditProductImage.setOnClickListener(this)
         mBinding.btnAddProduct.setOnClickListener(this)
 
         setupToolbar()
@@ -46,7 +46,10 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         v?.let {
             when (v.id) {
-                R.id.iv_add_update_product_image -> {
+                R.id.iv_add_product_image -> {
+                    Utils.askForReadPermissionToSavePhoto(this)
+                }
+                R.id.iv_edit_product_image -> {
                     Utils.askForReadPermissionToSavePhoto(this)
                 }
                 R.id.btn_add_product -> {
@@ -76,8 +79,8 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         if (resultCode == Activity.RESULT_OK && requestCode == Constants.GALLERY) {
             mSelectedProductPicUri = data!!.data
 
-            mBinding.ivAddUpdateProductImage
-                .setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_edit_34))
+            mBinding.ivEditProductImage.visibility = View.VISIBLE
+            mBinding.ivAddProductImage.visibility = View.INVISIBLE
 
             GlideLoader(this)
                 .loadPictureIntoView(mSelectedProductPicUri, mBinding.ivProductImage)
