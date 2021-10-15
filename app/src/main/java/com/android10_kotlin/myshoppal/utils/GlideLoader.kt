@@ -36,5 +36,4 @@ class GlideLoader(val context: Context) {
         }
     }
 
-
 }

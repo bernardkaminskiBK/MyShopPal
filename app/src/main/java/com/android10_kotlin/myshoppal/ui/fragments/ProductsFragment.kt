@@ -3,12 +3,14 @@ package com.android10_kotlin.myshoppal.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.recyclerview.widget.GridLayoutManager
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.FragmentProductsBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.ui.activities.AddProductActivity
 import com.android10_kotlin.myshoppal.ui.activities.DashboardActivity
+import com.android10_kotlin.myshoppal.ui.adapters.MyShopPalProductsAdapter
 
 class ProductsFragment : BaseFragment() {
 
@@ -51,6 +53,21 @@ class ProductsFragment : BaseFragment() {
 
     fun successProductsListFromFirestore(productsList: ArrayList<Product>) {
         hideProgressDialog()
+
+        if (productsList.size > 0) {
+            mBinding.rvMyProductItems.visibility = View.VISIBLE
+            mBinding.tvNoProductsFound.visibility = View.GONE
+
+            mBinding.rvMyProductItems.layoutManager = GridLayoutManager(requireActivity(), 3)
+            mBinding.rvMyProductItems.setHasFixedSize(true)
+
+            val myShopPalProductsAdapter = MyShopPalProductsAdapter(this)
+            mBinding.rvMyProductItems.adapter = myShopPalProductsAdapter
+            myShopPalProductsAdapter.show(productsList)
+        } else {
+            mBinding.rvMyProductItems.visibility = View.GONE
+            mBinding.tvNoProductsFound.visibility = View.VISIBLE
+        }
 
     }
 
