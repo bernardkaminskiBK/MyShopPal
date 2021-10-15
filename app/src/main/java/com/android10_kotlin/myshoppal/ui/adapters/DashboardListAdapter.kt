@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.android10_kotlin.myshoppal.databinding.CardViewProductsItemListBinding
+import com.android10_kotlin.myshoppal.databinding.CardViewProductsItemListDashboardBinding
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
-class MyShopPalProductsAdapter(private val fragment: Fragment) :
-    RecyclerView.Adapter<MyShopPalProductsAdapter.ViewHolder>() {
+class DashboardListAdapter(private val fragment: Fragment) :
+    RecyclerView.Adapter<DashboardListAdapter.ViewHolder>() {
 
     private var products: List<Product> = listOf()
 
-    class ViewHolder(view: CardViewProductsItemListBinding) : RecyclerView.ViewHolder(view.root) {
+    class ViewHolder(view: CardViewProductsItemListDashboardBinding) : RecyclerView.ViewHolder(view.root) {
         val productImage = view.productImg
         val productTitle = view.productTitle
         val productQuantity = view.productQuantity
@@ -21,8 +21,8 @@ class MyShopPalProductsAdapter(private val fragment: Fragment) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: CardViewProductsItemListBinding =
-            CardViewProductsItemListBinding.inflate(
+        val binding: CardViewProductsItemListDashboardBinding =
+            CardViewProductsItemListDashboardBinding.inflate(
                 LayoutInflater.from(fragment.context),
                 parent,
                 false

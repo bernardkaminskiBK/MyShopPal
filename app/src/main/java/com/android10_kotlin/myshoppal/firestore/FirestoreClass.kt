@@ -8,6 +8,7 @@ import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.ui.activities.*
+import com.android10_kotlin.myshoppal.ui.fragments.DashboardFragment
 import com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils
@@ -168,19 +169,43 @@ class FirestoreClass {
             .addOnSuccessListener { document ->
                 Log.e("Products list", document.documents.toString())
                 val productsList: ArrayList<Product> = ArrayList()
-                for(i in document.documents) {
+                for (i in document.documents) {
                     val product = i.toObject(Product::class.java)
                     product!!.id = i.id
 
                     productsList.add(product)
                 }
 
-                when(fragment) {
+                when (fragment) {
                     is ProductsFragment -> {
                         fragment.successProductsListFromFirestore(productsList)
                     }
                 }
             }.addOnFailureListener {
+                Log.e(fragment.requireActivity().javaClass.simpleName, it.message.toString(), it)
+            }
+    }
+
+    fun getDashboardItemList(fragment: DashboardFragment) {
+        mFireStore.collection(Constants.PRODUCTS)
+            .get()
+            .addOnSuccessListener { document ->
+                val productList: ArrayList<Product> = ArrayList()
+
+                for (i in document.documents) {
+                    val product = i.toObject(Product::class.java)!!
+                    product.id = i.id
+                    productList.add(product)
+                }
+
+                when (fragment) {
+                    is DashboardFragment -> {
+                        fragment.successDashboardItemsList(productList)
+                    }
+                }
+
+            }.addOnFailureListener {
+                fragment.hideProgressDialog()
                 Log.e(fragment.requireActivity().javaClass.simpleName, it.message.toString(), it)
             }
     }

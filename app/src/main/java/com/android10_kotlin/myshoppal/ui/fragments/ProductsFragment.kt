@@ -10,7 +10,8 @@ import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.ui.activities.AddProductActivity
 import com.android10_kotlin.myshoppal.ui.activities.DashboardActivity
-import com.android10_kotlin.myshoppal.ui.adapters.MyShopPalProductsAdapter
+import com.android10_kotlin.myshoppal.ui.adapters.DashboardListAdapter
+import com.android10_kotlin.myshoppal.ui.adapters.ProductsListAdapter
 
 class ProductsFragment : BaseFragment() {
 
@@ -54,19 +55,22 @@ class ProductsFragment : BaseFragment() {
     fun successProductsListFromFirestore(productsList: ArrayList<Product>) {
         hideProgressDialog()
 
+        val rvProductList = mBinding.rvMyProductItems
+        val tvNoProduct = mBinding.tvNoProductsFound
+
         if (productsList.size > 0) {
-            mBinding.rvMyProductItems.visibility = View.VISIBLE
-            mBinding.tvNoProductsFound.visibility = View.GONE
+            rvProductList.visibility = View.VISIBLE
+            tvNoProduct.visibility = View.GONE
 
-            mBinding.rvMyProductItems.layoutManager = GridLayoutManager(requireActivity(), 3)
-            mBinding.rvMyProductItems.setHasFixedSize(true)
+            rvProductList.layoutManager = GridLayoutManager(requireActivity(), 3)
+            rvProductList.setHasFixedSize(true)
 
-            val myShopPalProductsAdapter = MyShopPalProductsAdapter(this)
-            mBinding.rvMyProductItems.adapter = myShopPalProductsAdapter
-            myShopPalProductsAdapter.show(productsList)
+            val productListAdapter = ProductsListAdapter(this)
+            rvProductList.adapter = productListAdapter
+            productListAdapter.show(productsList)
         } else {
-            mBinding.rvMyProductItems.visibility = View.GONE
-            mBinding.tvNoProductsFound.visibility = View.VISIBLE
+            rvProductList.visibility = View.GONE
+            tvNoProduct.visibility = View.VISIBLE
         }
 
     }
