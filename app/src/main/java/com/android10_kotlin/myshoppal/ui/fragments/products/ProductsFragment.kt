@@ -1,15 +1,15 @@
-package com.android10_kotlin.myshoppal.ui.fragments.home
+package com.android10_kotlin.myshoppal.ui.fragments.products
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.FragmentProductsBinding
 import com.android10_kotlin.myshoppal.ui.activities.AddProductActivity
 import com.android10_kotlin.myshoppal.ui.activities.DashboardActivity
+import com.android10_kotlin.myshoppal.ui.fragments.BaseFragment
 
-class ProductsFragment : Fragment() {
+class ProductsFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentProductsBinding
 

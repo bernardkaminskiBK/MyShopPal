@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_products"
-        android:name="com.android10_kotlin.myshoppal.ui.fragments.home.ProductsFragment"
+        android:name="com.android10_kotlin.myshoppal.ui.fragments.products.ProductsFragment"
         android:label="@string/products_title"
         tools:layout="@layout/fragment_products" />
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_orders"
-        android:name="com.android10_kotlin.myshoppal.ui.fragments.notifications.OrdersFragment"
+        android:name="com.android10_kotlin.myshoppal.ui.fragments.orders.OrdersFragment"
         android:label="@string/orders_title"
         tools:layout="@layout/fragment_orders" />
 
