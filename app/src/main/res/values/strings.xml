@@ -77,4 +77,10 @@
     <string name="add_to_cart">ADD TO CART</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="delete_success">The product was successfully deleted.</string>
+
+    <string name="delete_dialog_message">Are you sure you want to delete product %1$s?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+
 </resources>

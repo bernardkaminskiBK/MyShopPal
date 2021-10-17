@@ -1,5 +1,6 @@
 package com.android10_kotlin.myshoppal.ui.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -11,7 +12,6 @@ import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.ui.activities.AddProductActivity
 import com.android10_kotlin.myshoppal.ui.activities.DashboardActivity
-import com.android10_kotlin.myshoppal.ui.adapters.DashboardListAdapter
 import com.android10_kotlin.myshoppal.ui.adapters.ProductsListAdapter
 
 class ProductsFragment : BaseFragment() {
@@ -87,8 +87,36 @@ class ProductsFragment : BaseFragment() {
     }
 
     fun deleteProduct(product: Product) {
-        Toast.makeText(this.requireContext(), "Delete product: ${product.id}", Toast.LENGTH_SHORT)
-            .show()
+        showAlertDialogToDeleteProduct(product)
+    }
+
+    fun productDeleteSuccess() {
+        hideProgressDialog()
+        Toast.makeText(
+            this.requireContext(),
+            getString(R.string.delete_success),
+            Toast.LENGTH_SHORT
+        ).show()
+        getProductsListFromFirestore()
+    }
+
+    private fun showAlertDialogToDeleteProduct(product: Product) {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle(product.title)
+        builder.setMessage(getString(R.string.delete_dialog_message, product.title))
+        builder.setPositiveButton(getString(R.string.Yes)) { dialogInterface, _ ->
+            showProgressDialog(getString(R.string.please_wait))
+            FirestoreClass().deleteProduct(this, product)
+            dialogInterface.dismiss()
+        }
+
+        builder.setNegativeButton(getString(R.string.No)) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+
+        alertDialog.show()
     }
 
 }
