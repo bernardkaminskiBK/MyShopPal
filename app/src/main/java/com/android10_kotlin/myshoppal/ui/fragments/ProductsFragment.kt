@@ -3,6 +3,7 @@ package com.android10_kotlin.myshoppal.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.FragmentProductsBinding
@@ -83,6 +84,11 @@ class ProductsFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         getProductsListFromFirestore()
+    }
+
+    fun deleteProduct(product: Product) {
+        Toast.makeText(this.requireContext(), "Delete product: ${product.id}", Toast.LENGTH_SHORT)
+            .show()
     }
 
 }

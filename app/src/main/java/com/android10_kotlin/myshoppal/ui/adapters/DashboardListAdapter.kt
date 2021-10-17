@@ -18,6 +18,7 @@ class DashboardListAdapter(private val fragment: Fragment) :
         val productTitle = view.productTitle
         val productQuantity = view.productQuantity
         val productPrice = view.productPrice
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,6 +40,7 @@ class DashboardListAdapter(private val fragment: Fragment) :
         holder.productTitle.text = product.title
         holder.productQuantity.text = "${product.stock_quantity} pc"
         holder.productPrice.text = "$${product.price}"
+
     }
 
     override fun getItemCount(): Int {

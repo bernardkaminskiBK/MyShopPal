@@ -75,4 +75,6 @@
 
     <string name="no_dashboard_item_found">No items found.</string>
     <string name="add_to_cart">ADD TO CART</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
