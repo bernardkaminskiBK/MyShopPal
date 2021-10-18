@@ -1,5 +1,6 @@
 package com.android10_kotlin.myshoppal.ui.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.CardViewProductsItemListBinding
 import com.android10_kotlin.myshoppal.models.Product
+import com.android10_kotlin.myshoppal.ui.activities.ProductDetailsActivity
 import com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment
+import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
 class ProductsListAdapter(private val fragment: Fragment) :
@@ -48,6 +51,12 @@ class ProductsListAdapter(private val fragment: Fragment) :
 
         holder.ibMore.setOnClickListener {
             setPopUpMenu(fragment, holder.ibMore, product)
+        }
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(fragment.requireContext(), ProductDetailsActivity::class.java)
+            intent.putExtra(Constants.PRODUCT_DETAILS, product)
+            fragment.requireContext().startActivity(intent)
         }
     }
 

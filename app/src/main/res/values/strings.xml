@@ -83,4 +83,8 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
 
+    <string name="title_product_details">Product details</string>
+    <string name="lbl_product_description">Product Description</string>
+    <string name="lbl_product_details_stock_quantity">Stock Quantity</string>
+
 </resources>
