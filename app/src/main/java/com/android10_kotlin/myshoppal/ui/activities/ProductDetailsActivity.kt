@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityProductDetailsBinding
-import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader

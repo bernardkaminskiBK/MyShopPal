@@ -5,9 +5,11 @@ import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.android10_kotlin.myshoppal.R
+import com.android10_kotlin.myshoppal.models.CartItem
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.models.User
 import com.android10_kotlin.myshoppal.ui.activities.*
+import com.android10_kotlin.myshoppal.ui.adapters.DashboardListAdapter
 import com.android10_kotlin.myshoppal.ui.fragments.DashboardFragment
 import com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment
 import com.android10_kotlin.myshoppal.utils.Constants
@@ -235,6 +237,21 @@ class FirestoreClass {
                 fragment.hideProgressDialog()
                 Log.e(
                     fragment.requireActivity().javaClass.simpleName,
+                    "Error while deleting the product.",
+                    it
+                )
+            }
+    }
+
+    fun addCartItems(dashboardListAdapter: DashboardListAdapter, addToCart: CartItem) {
+        mFireStore.collection(Constants.CART_ITEMS)
+            .document()
+            .set(addToCart, SetOptions.merge())
+            .addOnSuccessListener {
+                dashboardListAdapter.addToCartSuccess()
+            }.addOnFailureListener {
+                Log.e(
+                    dashboardListAdapter.javaClass.simpleName,
                     "Error while deleting the product.",
                     it
                 )

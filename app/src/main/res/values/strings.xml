@@ -86,5 +86,6 @@
     <string name="title_product_details">Product details</string>
     <string name="lbl_product_description">Product Description</string>
     <string name="lbl_product_details_stock_quantity">Stock Quantity</string>
+    <string name="added_to_cart">Product was added to your cart</string>
 
 </resources>
