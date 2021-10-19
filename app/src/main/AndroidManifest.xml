@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
+        <activity android:name=".ui.activities.CartListActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.ProductDetailsActivity"
             android:screenOrientation="portrait" />
@@ -40,7 +42,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

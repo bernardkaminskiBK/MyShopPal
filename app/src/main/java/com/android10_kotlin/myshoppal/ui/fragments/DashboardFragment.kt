@@ -8,6 +8,7 @@ import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.FragmentDashboardBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Product
+import com.android10_kotlin.myshoppal.ui.activities.CartListActivity
 import com.android10_kotlin.myshoppal.ui.activities.DashboardActivity
 import com.android10_kotlin.myshoppal.ui.activities.SettingsActivity
 import com.android10_kotlin.myshoppal.ui.adapters.DashboardListAdapter
@@ -38,7 +39,7 @@ class DashboardFragment : BaseFragment() {
                 return true
             }
             R.id.action_shopping_cart -> {
-
+                startActivity(Intent(activity, CartListActivity::class.java))
                 return true
             }
         }

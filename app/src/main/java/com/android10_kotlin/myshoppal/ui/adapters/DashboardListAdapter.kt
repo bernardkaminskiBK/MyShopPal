@@ -77,7 +77,7 @@ class DashboardListAdapter(private val fragment: Fragment, var btnCart: MenuItem
 
     fun addToCartSuccess() {
         val context = fragment.requireContext()
-        Toast.makeText(context, context.getString(R.string.added_to_cart), Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show()
         btnCart?.isVisible = true
     }
 
