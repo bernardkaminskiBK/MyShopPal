@@ -2,6 +2,7 @@ package com.android10_kotlin.myshoppal.utils
 
 object Constants {
 
+    const val EXTRA_PRODUCT_OWNER_ID = "extra_product_owner_id"
     const val USERS = "users"
     const val PRODUCTS = "products"
 

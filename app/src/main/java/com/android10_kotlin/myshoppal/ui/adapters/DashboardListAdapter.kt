@@ -1,10 +1,12 @@
 package com.android10_kotlin.myshoppal.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.android10_kotlin.myshoppal.databinding.CardViewProductsItemListDashboardBinding
+import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
@@ -18,6 +20,7 @@ class DashboardListAdapter(private val fragment: Fragment) :
         val productTitle = view.productTitle
         val productQuantity = view.productQuantity
         val productPrice = view.productPrice
+        val btnAddToCart = view.btnAddToCart
 
     }
 
@@ -40,6 +43,12 @@ class DashboardListAdapter(private val fragment: Fragment) :
         holder.productTitle.text = product.title
         holder.productQuantity.text = "${product.stock_quantity} pc"
         holder.productPrice.text = "$${product.price}"
+
+        if(FirestoreClass().getCurrentUserID() == product.user_id) {
+            holder.btnAddToCart.visibility = View.INVISIBLE
+        } else {
+            holder.btnAddToCart.visibility = View.VISIBLE
+        }
 
     }
 
