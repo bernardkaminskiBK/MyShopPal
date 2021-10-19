@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivitySplashScreenBinding
+import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -43,16 +44,20 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private suspend fun wait() {
         delay(3000L)
-        val intent = Intent(this, LoginActivity::class.java)
-//        val intent = Intent(this, DashboardActivity::class.java)
-        startActivity(intent)
+        if (FirestoreClass().getCurrentUserID().isNotEmpty()) {
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
         finish()
     }
 
     private fun hideStatusBars() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }else {
+        } else {
             @Suppress("DEPRECATION")
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
