@@ -15,9 +15,11 @@ import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
 class CartListAdapter(private val context: Context) :
-    RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<CartListAdapter.ViewHolder>(), View.OnClickListener {
 
     private var cartItems: List<CartItem> = listOf()
+
+    private var cartItem: CartItem? = null
 
     class ViewHolder(view: ItemListLayoutBinding) : RecyclerView.ViewHolder(view.root) {
         val cartItemImage = view.ivItemImage
@@ -36,32 +38,39 @@ class CartListAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val cartItem = cartItems[position]
+        cartItem = cartItems[position]
 
-        GlideLoader(context).loadPictureIntoView(cartItem.image, holder.cartItemImage)
-        holder.cartItemName.text = cartItem.title
-        holder.cartItemPrice.text = "${cartItem.price} €"
-        holder.cartQuantity.text = cartItem.cart_quantity
+        GlideLoader(context).loadPictureIntoView(cartItem!!.image, holder.cartItemImage)
+        holder.cartItemName.text = cartItem!!.title
+        holder.cartItemPrice.text = "${cartItem!!.price} €"
+        holder.cartQuantity.text = cartItem!!.cart_quantity
 
-        checkCartQuantity(cartItem.cart_quantity, holder)
+        checkCartQuantity(cartItem!!.cart_quantity, holder)
 
-        holder.ibDeleteProduct.setOnClickListener {
-            when (context) {
-                is CartListActivity -> {
-                    context.showProgressDialog(context.getString(R.string.please_wait))
+        holder.ibDeleteProduct.setOnClickListener(this)
+        holder.ibRemoveAmount.setOnClickListener(this)
+        holder.ibAddAmount.setOnClickListener(this)
+
+    }
+
+    override fun onClick(v: View) {
+            when(v.id) {
+               R.id.ib_delete_product -> {
+                    when (context) {
+                        is CartListActivity -> {
+                            context.showProgressDialog(context.getString(R.string.please_wait))
+                        }
+                    }
+                    FirestoreClass().removeItemFromCart(context, cartItem!!.id)
                 }
+                R.id.ib_remove_from_card -> {
+                    cartItem?.let { removeFromCart(it) }
+                }
+                R.id.ib_add_to_cart -> {
+                    cartItem?.let {  addToCart(cartItem!!) }
+                }
+
             }
-            FirestoreClass().removeItemFromCart(context, cartItem.id)
-        }
-
-        holder.ibRemoveAmount.setOnClickListener {
-            removeFromCart(cartItem)
-        }
-
-        holder.ibAddAmount.setOnClickListener {
-            addToCart(cartItem)
-        }
-
     }
 
     private fun removeFromCart(cartItem: CartItem) {
@@ -131,5 +140,7 @@ class CartListAdapter(private val context: Context) :
 
         }
     }
+
+
 
 }
