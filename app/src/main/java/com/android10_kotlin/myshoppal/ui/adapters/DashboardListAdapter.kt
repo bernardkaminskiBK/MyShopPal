@@ -1,7 +1,7 @@
 package com.android10_kotlin.myshoppal.ui.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -12,10 +12,11 @@ import com.android10_kotlin.myshoppal.databinding.CardViewProductsItemListDashbo
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.CartItem
 import com.android10_kotlin.myshoppal.models.Product
+import com.android10_kotlin.myshoppal.ui.activities.CartListActivity
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
-class DashboardListAdapter(private val fragment: Fragment, var btnCart: MenuItem?) :
+class DashboardListAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<DashboardListAdapter.ViewHolder>() {
 
     private var products: List<Product> = listOf()
@@ -26,8 +27,7 @@ class DashboardListAdapter(private val fragment: Fragment, var btnCart: MenuItem
         val productTitle = view.productTitle
         val productQuantity = view.productQuantity
         val productPrice = view.productPrice
-        val btnAddToCart = view.btnAddToCart
-
+        val ibAddToCart = view.ibAddToCart
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,9 +47,10 @@ class DashboardListAdapter(private val fragment: Fragment, var btnCart: MenuItem
             .loadPictureIntoView(product.product_image, holder.productImage)
 
         holder.productTitle.text = product.title
-        holder.productQuantity.text = "${product.stock_quantity} pc"
-        holder.productPrice.text = "$${product.price}"
-        holder.btnAddToCart.setOnClickListener {
+        holder.productQuantity.text = "${product.stock_quantity} x"
+        holder.productPrice.text = "${product.price} €"
+        holder.ibAddToCart.setOnClickListener {
+            fragment.startActivity(Intent(fragment.requireContext(), CartListActivity::class.java))
             addToCart(product)
         }
 
@@ -77,15 +78,15 @@ class DashboardListAdapter(private val fragment: Fragment, var btnCart: MenuItem
 
     fun addToCartSuccess() {
         val context = fragment.requireContext()
-        Toast.makeText(context, context.getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show()
-        btnCart?.isVisible = true
+        Toast.makeText(context, context.getString(R.string.added_to_cart), Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun hideAddToCardForOwner(holder: ViewHolder, product: Product) {
         if (FirestoreClass().getCurrentUserID() == product.user_id) {
-            holder.btnAddToCart.visibility = View.INVISIBLE
+            holder.ibAddToCart.visibility = View.INVISIBLE
         } else {
-            holder.btnAddToCart.visibility = View.VISIBLE
+            holder.ibAddToCart.visibility = View.VISIBLE
         }
     }
 

@@ -7,8 +7,6 @@
         android:id="@+id/action_shopping_cart"
         android:icon="@drawable/ic_vector_cart"
         android:title="@string/settings"
-        android:visible="false"
-        tools:visible="true"
         app:showAsAction="always"/>
 
     <item

@@ -2,10 +2,16 @@ package com.android10_kotlin.myshoppal.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ItemListLayoutBinding
+import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.CartItem
+import com.android10_kotlin.myshoppal.ui.activities.CartListActivity
+import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
 class CartListAdapter(private val context: Context) :
@@ -17,6 +23,10 @@ class CartListAdapter(private val context: Context) :
         val cartItemImage = view.ivItemImage
         val cartItemName = view.tvItemName
         val cartItemPrice = view.tvItemPrice
+        val cartQuantity = view.tvCartQuantity
+        val ibAddAmount = view.ibAddToCart
+        val ibRemoveAmount = view.ibRemoveFromCard
+        val ibDeleteProduct = view.ibDeleteProduct
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,7 +40,69 @@ class CartListAdapter(private val context: Context) :
 
         GlideLoader(context).loadPictureIntoView(cartItem.image, holder.cartItemImage)
         holder.cartItemName.text = cartItem.title
-        holder.cartItemPrice.text = cartItem.price
+        holder.cartItemPrice.text = "${cartItem.price} €"
+        holder.cartQuantity.text = cartItem.cart_quantity
+
+        checkCartQuantity(cartItem.cart_quantity, holder)
+
+        holder.ibDeleteProduct.setOnClickListener {
+            when (context) {
+                is CartListActivity -> {
+                    context.showProgressDialog(context.getString(R.string.please_wait))
+                }
+            }
+            FirestoreClass().removeItemFromCart(context, cartItem.id)
+        }
+
+        holder.ibRemoveAmount.setOnClickListener {
+            removeFromCart(cartItem)
+        }
+
+        holder.ibAddAmount.setOnClickListener {
+            addToCart(cartItem)
+        }
+
+    }
+
+    private fun removeFromCart(cartItem: CartItem) {
+        if (cartItem.cart_quantity == "1") {
+            FirestoreClass().removeItemFromCart(context, cartItem.id)
+        } else {
+            val cartQuantity: Int = cartItem.cart_quantity.toInt()
+            val itemHashMap = HashMap<String, Any>()
+
+            itemHashMap[Constants.CART_QUANTITY] = (cartQuantity - 1).toString()
+
+            if (context is CartListActivity) {
+                context.showProgressDialog(context.getString(R.string.please_wait))
+            }
+
+            FirestoreClass().updateMyCart(context, cartItem.id, itemHashMap)
+        }
+    }
+
+    private fun addToCart(cartItem: CartItem) {
+        val cartQuantity: Int = cartItem.cart_quantity.toInt()
+
+        if (cartQuantity < cartItem.stock_quantity.toInt()) {
+            val itemHashMap = HashMap<String, Any>()
+            itemHashMap[Constants.CART_QUANTITY] = (cartQuantity + 1).toString()
+
+            if (context is CartListActivity) {
+                context.showProgressDialog(context.resources.getString(R.string.please_wait))
+            }
+            FirestoreClass().updateMyCart(context, cartItem.id, itemHashMap)
+        } else {
+            if (context is CartListActivity) {
+                context.showErrorSnackBar(
+                    context.resources.getString(
+                        R.string.msg_for_available_stock,
+                        cartItem.stock_quantity
+                    ),
+                    true
+                )
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +112,24 @@ class CartListAdapter(private val context: Context) :
     fun show(list: List<CartItem>) {
         cartItems = list
         notifyDataSetChanged()
+    }
+
+    private fun checkCartQuantity(cartQuantity: String, holder: ViewHolder) {
+        if (cartQuantity.toInt() == 0) {
+            holder.ibRemoveAmount.visibility = View.GONE
+            holder.ibAddAmount.visibility = View.GONE
+
+            holder.cartQuantity.text = context.getString(R.string.out_of_stock)
+            holder.cartQuantity
+                .setTextColor(ContextCompat.getColor(context, R.color.colorSnackBarError))
+        } else {
+            holder.ibRemoveAmount.visibility = View.VISIBLE
+            holder.ibAddAmount.visibility = View.VISIBLE
+
+            holder.cartQuantity
+                .setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryText))
+
+        }
     }
 
 }

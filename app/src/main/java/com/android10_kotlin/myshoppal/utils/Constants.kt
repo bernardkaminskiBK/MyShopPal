@@ -16,12 +16,6 @@ object Constants {
     const val IMAGE = "image"
     const val COMPLETE_PROFILE = "profileCompleted"
 
-    const val PRODUCT_IMAGE = "productImage"
-    const val TITLE = "title"
-    const val PRICE = "price"
-    const val DESCRIPTION = "description"
-    const val QUANTITY = "quantity"
-
     const val USER_PROFILE_TYPE_IMAGE = "user_profile_image"
     const val PRODUCT_TYPE_IMAGE = "product_image"
 
@@ -36,5 +30,7 @@ object Constants {
 
     const val DEFAULT_CART_QUANTITY: String = "1"
     const val CART_ITEMS = "cartItems"
+
+    const val CART_QUANTITY = "cart_quantity"
 
 }

@@ -60,7 +60,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAddToCart"
+            android:id="@+id/ib_add_to_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
@@ -69,7 +69,21 @@
             android:fontFamily="@font/baloo"
             android:text="@string/add_to_cart"
             android:textColor="@color/white"
-            android:textSize="12sp">
+            android:visibility="visible"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOutOfStock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background_gray"
+            android:padding="5dp"
+            android:fontFamily="@font/baloo"
+            android:text="Out of stock"
+            android:alpha="0.4"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone">
 
         </androidx.appcompat.widget.AppCompatButton>
     </LinearLayout>

@@ -19,8 +19,6 @@ class DashboardFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentDashboardBinding
 
-    private var btnCart: MenuItem? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -28,8 +26,6 @@ class DashboardFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.dashboard_menu, menu)
-        btnCart = menu.findItem(R.id.action_shopping_cart)
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -80,7 +76,7 @@ class DashboardFragment : BaseFragment() {
             rvDashboard.layoutManager = GridLayoutManager(requireActivity(), 3)
             rvDashboard.setHasFixedSize(true)
 
-            val dashboardListAdapter = DashboardListAdapter(this, btnCart)
+            val dashboardListAdapter = DashboardListAdapter(this)
             rvDashboard.adapter = dashboardListAdapter
             dashboardListAdapter.show(dashboardItemsList)
         } else {
