@@ -1,11 +1,15 @@
 package com.android10_kotlin.myshoppal.ui.adapters
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android10_kotlin.myshoppal.databinding.ItemAddressLayoutBinding
 import com.android10_kotlin.myshoppal.models.Address
+import com.android10_kotlin.myshoppal.ui.activities.AddEditAddressActivity
+import com.android10_kotlin.myshoppal.utils.Constants
 
 class AddressListAdapter(private val context: Context) :
     RecyclerView.Adapter<AddressListAdapter.ViewHolder>() {
@@ -42,6 +46,14 @@ class AddressListAdapter(private val context: Context) :
     fun show(list: List<Address>) {
         addresses = list
         notifyDataSetChanged()
+    }
+
+    fun notifyEditItem(activity: Activity, position: Int) {
+        val intent = Intent(context, AddEditAddressActivity::class.java)
+        intent.putExtra(Constants.EXTRA_ADDRESS_DETAILS, addresses[position])
+
+        activity.startActivityForResult(intent, Constants.ADD_ADDRESS_REQUEST_CODE)
+        notifyItemChanged(position)
     }
 
 }

@@ -38,5 +38,7 @@ object Constants {
     const val OFFICE = "office"
     const val OTHER = "other"
 
+    const val EXTRA_ADDRESS_DETAILS = "AddressDetails"
+    const val ADD_ADDRESS_REQUEST_CODE: Int = 121
 
 }

@@ -23,6 +23,13 @@ class AddEditAddressActivity : BaseActivity() {
 
         setupToolbar()
 
+        if (intent.hasExtra(Constants.EXTRA_ADDRESS_DETAILS)) {
+            mAddressDetails =
+                intent.getParcelableExtra(Constants.EXTRA_ADDRESS_DETAILS)!!
+        }
+
+        editAddress()
+
         mBinding.btnSubmitAddress.setOnClickListener {
             saveAddressToFirestore()
         }
@@ -85,6 +92,36 @@ class AddEditAddressActivity : BaseActivity() {
         }
     }
 
+    private fun editAddress() {
+        if (mAddressDetails != null) {
+            if (mAddressDetails!!.id.isNotEmpty()) {
+
+                mBinding.toolbarTitle.text = resources.getString(R.string.title_edit_address)
+                mBinding.btnSubmitAddress.text = resources.getString(R.string.btn_lbl_update)
+
+                mBinding.etFullName.setText(mAddressDetails?.name)
+                mBinding.etPhoneNumber.setText(mAddressDetails?.mobile_number)
+                mBinding.etAddress.setText(mAddressDetails?.address)
+                mBinding.etZipCode.setText(mAddressDetails?.zipCode)
+                mBinding.etAdditionalNote.setText(mAddressDetails?.additionalNote)
+
+                when (mAddressDetails?.type) {
+                    Constants.HOME -> {
+                        mBinding.rbHome.isChecked = true
+                    }
+                    Constants.OFFICE -> {
+                        mBinding.rbOffice.isChecked = true
+                    }
+                    else -> {
+                        mBinding.rbOther.isChecked = true
+                        mBinding.tilOtherDetails.visibility = View.VISIBLE
+                        mBinding.etOtherDetails.setText(mAddressDetails?.otherDetails)
+                    }
+                }
+            }
+        }
+    }
+
     private fun saveAddressToFirestore() {
         val fullName: String = mBinding.etFullName.text.toString().trim { it <= ' ' }
         val phoneNumber: String = mBinding.etPhoneNumber.text.toString().trim { it <= ' ' }
@@ -133,13 +170,14 @@ class AddEditAddressActivity : BaseActivity() {
 
     fun addUpdateAddressSuccess() {
         hideProgressDialog()
+        val notifySuccessMessage: String =
+            if (mAddressDetails != null && mAddressDetails!!.id.isNotEmpty()) {
+                resources.getString(R.string.msg_your_address_updated_successfully)
+            } else {
+                resources.getString(R.string.err_your_address_added_successfully)
+            }
 
-        Toast.makeText(
-            this,
-            getString(R.string.err_your_address_added_successfully),
-            Toast.LENGTH_SHORT
-        ).show()
-
+        Toast.makeText(this, notifySuccessMessage, Toast.LENGTH_SHORT).show()
         finish()
     }
 

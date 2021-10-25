@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android10_kotlin.myshoppal.R
@@ -11,6 +13,8 @@ import com.android10_kotlin.myshoppal.databinding.ActivityAddressListBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Address
 import com.android10_kotlin.myshoppal.ui.adapters.AddressListAdapter
+import com.android10_kotlin.myshoppal.utils.Swipe
+import com.android10_kotlin.myshoppal.utils.SwipeToEditCallback
 import java.util.ArrayList
 
 class AddressListActivity : BaseActivity() {
@@ -65,10 +69,25 @@ class AddressListActivity : BaseActivity() {
             val adapter = AddressListAdapter(this)
             mBinding.rvAddressList.adapter = adapter
             adapter.show(addressList)
+
+            Swipe.editSwipe(this, mBinding.rvAddressList)
+            Swipe.deleteSwipe(this, mBinding.rvAddressList, addressList)
         } else {
             mBinding.rvAddressList.visibility = View.GONE
             mBinding.tvNoAddressFound.visibility = View.VISIBLE
         }
+    }
+
+    fun deleteAddressSuccess() {
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@AddressListActivity,
+            resources.getString(R.string.err_your_address_deleted_successfully),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        getAddressList()
     }
 
 }
