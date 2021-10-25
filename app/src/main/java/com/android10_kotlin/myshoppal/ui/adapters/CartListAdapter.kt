@@ -141,6 +141,4 @@ class CartListAdapter(private val context: Context) :
         }
     }
 
-
-
 }
