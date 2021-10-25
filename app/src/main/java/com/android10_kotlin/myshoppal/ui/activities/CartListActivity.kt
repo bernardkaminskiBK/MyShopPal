@@ -17,7 +17,6 @@ class CartListActivity : BaseActivity() {
     private lateinit var mProductsList: ArrayList<Product>
     private lateinit var mCartListItems: ArrayList<CartItem>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityCartListBinding.inflate(layoutInflater)

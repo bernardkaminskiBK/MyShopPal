@@ -26,6 +26,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
 
         mBinding.tvEdit.setOnClickListener(this)
         mBinding.btnLogout.setOnClickListener(this)
+        mBinding.llAddress.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -36,6 +37,9 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 }
                 R.id.tv_edit -> {
                     moveToProfileActivity()
+                }
+                R.id.ll_address -> {
+                    moveToAddressListActivity()
                 }
             }
         }
@@ -81,6 +85,10 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         val intent = Intent(this@SettingsActivity, UserProfileActivity::class.java)
         intent.putExtra(Constants.EXTRA_USER_DETAILS, mUsersDetails)
         startActivity(intent)
+    }
+
+    private fun moveToAddressListActivity() {
+        startActivity(Intent(this@SettingsActivity, AddressListActivity::class.java))
     }
 
     override fun onResume() {

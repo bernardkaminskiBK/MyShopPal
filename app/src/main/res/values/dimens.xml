@@ -42,7 +42,7 @@
     <dimen name="settings_user_image_marginTop">-75dp</dimen>
     <dimen name="settings_user_picture_margin">3dp</dimen>
     <dimen name="grey_border_stroke_size">1dp</dimen>
-    <dimen name="grey_border_radius">2dp</dimen>
+    <dimen name="grey_border_radius">15dp</dimen>
     <dimen name="settings_edit_label_marginStartEnd">10dp</dimen>
     <dimen name="settings_edit_label_marginTopBottom">5dp</dimen>
     <dimen name="settings_edit_label_textSize">14sp</dimen>
@@ -93,5 +93,22 @@
     <dimen name="rv_cart_items_marginTop">16dp</dimen>
     <dimen name="ll_checkout_padding">16dp</dimen>
     <dimen name="checkout_label_value_textSize">18sp</dimen>
+
+    <dimen name="btn_add_address_margin">16dp</dimen>
+    <dimen name="btn_add_address_padding">16dp</dimen>
+    <dimen name="add_address_textSize">18sp</dimen>
+    <dimen name="rv_address_list_marginTop">16dp</dimen>
+
+    <dimen name="add_edit_address_radio_button_height">40dp</dimen>
+    <dimen name="add_edit_address_radio_button_marginStartEnd">5dp</dimen>
+
+    <dimen name="item_address_marginTop">16dp</dimen>
+    <dimen name="item_address_paddingStartEnd">16dp</dimen>
+    <dimen name="item_address_paddingTopBottom">10dp</dimen>
+    <dimen name="item_address_name_textSize">18sp</dimen>
+    <dimen name="item_address_type_paddingStartEnd">10dp</dimen>
+    <dimen name="item_address_type_paddingTopBottom">2dp</dimen>
+    <dimen name="address_details_textSize">14sp</dimen>
+    <dimen name="address_details_marginTop">2dp</dimen>
 
 </resources>
