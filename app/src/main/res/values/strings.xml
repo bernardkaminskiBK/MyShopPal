@@ -128,7 +128,7 @@
 
     <string name="err_your_address_deleted_successfully">Your address was deleted successfully.</string>
 
-    <string name="title_select_address">SELECT ADDRESS</string>
+    <string name="title_select_address">Select address</string>
     <string name="address_list">Address list</string>
     <string name="add_address">Add address</string>
 

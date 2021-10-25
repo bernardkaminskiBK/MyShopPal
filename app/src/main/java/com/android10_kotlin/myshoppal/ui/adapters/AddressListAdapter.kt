@@ -5,13 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.android10_kotlin.myshoppal.databinding.ItemAddressLayoutBinding
 import com.android10_kotlin.myshoppal.models.Address
 import com.android10_kotlin.myshoppal.ui.activities.AddEditAddressActivity
 import com.android10_kotlin.myshoppal.utils.Constants
 
-class AddressListAdapter(private val context: Context) :
+class AddressListAdapter(private val context: Context, private val selectAddress: Boolean) :
     RecyclerView.Adapter<AddressListAdapter.ViewHolder>() {
 
     private var addresses: List<Address> = listOf()
@@ -36,8 +37,17 @@ class AddressListAdapter(private val context: Context) :
         holder.type.text = address.type
         holder.details.text = "${address.address}, ${address.zipCode}"
         holder.phoneNumber.text = address.mobile_number
-    }
 
+        if (selectAddress) {
+            holder.itemView.setOnClickListener {
+                Toast.makeText(
+                    context,
+                    "Selected address: ${address.address}, ${address.zipCode}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
 
     override fun getItemCount(): Int {
         return addresses.size

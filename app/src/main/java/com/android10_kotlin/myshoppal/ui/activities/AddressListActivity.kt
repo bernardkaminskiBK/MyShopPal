@@ -1,25 +1,25 @@
 package com.android10_kotlin.myshoppal.ui.activities
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivityAddressListBinding
 import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.Address
 import com.android10_kotlin.myshoppal.ui.adapters.AddressListAdapter
+import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Swipe
-import com.android10_kotlin.myshoppal.utils.SwipeToEditCallback
 import java.util.ArrayList
 
 class AddressListActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivityAddressListBinding
+
+    private var mSelectAddress: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,15 +27,23 @@ class AddressListActivity : BaseActivity() {
         setContentView(mBinding.root)
 
         setupToolbar()
+        getAddressList()
 
         mBinding.tvAddAddress.setOnClickListener {
             moveToAddEditAddressActivity()
         }
+
+        checkIfHasExtra()
     }
 
-    override fun onResume() {
-        super.onResume()
-        getAddressList()
+    private fun checkIfHasExtra() {
+        if (intent.hasExtra(Constants.EXTRA_SELECT_ADDRESS)) {
+            mSelectAddress =
+                intent.getBooleanExtra(Constants.EXTRA_SELECT_ADDRESS, false)
+            if (mSelectAddress) {
+                mBinding.toolbarTitle.text = getString(R.string.title_select_address)
+            }
+        }
     }
 
     private fun setupToolbar() {
@@ -53,7 +61,17 @@ class AddressListActivity : BaseActivity() {
     }
 
     private fun moveToAddEditAddressActivity() {
-        startActivity(Intent(this@AddressListActivity, AddEditAddressActivity::class.java))
+        val intent = Intent(this@AddressListActivity, AddEditAddressActivity::class.java)
+        @Suppress("DEPRECATION")
+        startActivityForResult(intent, Constants.ADD_ADDRESS_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.ADD_ADDRESS_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            getAddressList()
+        }
     }
 
     fun successAddressListFromFirestore(addressList: ArrayList<Address>) {
@@ -66,12 +84,14 @@ class AddressListActivity : BaseActivity() {
             mBinding.rvAddressList.layoutManager = LinearLayoutManager(this)
             mBinding.rvAddressList.setHasFixedSize(true)
 
-            val adapter = AddressListAdapter(this)
+            val adapter = AddressListAdapter(this, mSelectAddress)
             mBinding.rvAddressList.adapter = adapter
             adapter.show(addressList)
 
-            Swipe.editSwipe(this, mBinding.rvAddressList)
-            Swipe.deleteSwipe(this, mBinding.rvAddressList, addressList)
+            if (!mSelectAddress) {
+                Swipe.editSwipe(this, mBinding.rvAddressList)
+                Swipe.deleteSwipe(this, mBinding.rvAddressList, addressList)
+            }
         } else {
             mBinding.rvAddressList.visibility = View.GONE
             mBinding.tvNoAddressFound.visibility = View.VISIBLE

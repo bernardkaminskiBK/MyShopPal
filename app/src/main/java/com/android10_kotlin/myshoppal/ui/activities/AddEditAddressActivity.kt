@@ -1,5 +1,6 @@
 package com.android10_kotlin.myshoppal.ui.activities
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -178,6 +179,7 @@ class AddEditAddressActivity : BaseActivity() {
             }
 
         Toast.makeText(this, notifySuccessMessage, Toast.LENGTH_SHORT).show()
+        setResult(Activity.RESULT_OK)
         finish()
     }
 

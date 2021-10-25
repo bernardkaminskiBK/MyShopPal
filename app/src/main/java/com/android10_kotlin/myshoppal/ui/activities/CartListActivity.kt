@@ -1,5 +1,6 @@
 package com.android10_kotlin.myshoppal.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,6 +11,7 @@ import com.android10_kotlin.myshoppal.firestore.FirestoreClass
 import com.android10_kotlin.myshoppal.models.CartItem
 import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.ui.adapters.CartListAdapter
+import com.android10_kotlin.myshoppal.utils.Constants
 
 class CartListActivity : BaseActivity() {
 
@@ -23,6 +25,10 @@ class CartListActivity : BaseActivity() {
         setContentView(mBinding.root)
 
         setupToolbar()
+
+        mBinding.btnCheckout.setOnClickListener {
+            moveToAddressListActivity()
+        }
     }
 
     private fun setupToolbar() {
@@ -89,6 +95,12 @@ class CartListActivity : BaseActivity() {
             mBinding.tvNoCartItemFound.visibility = View.VISIBLE
         }
 
+    }
+
+    private fun moveToAddressListActivity() {
+        val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
+        intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+        startActivity(intent)
     }
 
     fun successProductsListFromFireStore(productList: ArrayList<Product>) {
