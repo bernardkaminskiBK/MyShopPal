@@ -14,11 +14,10 @@ import com.android10_kotlin.myshoppal.ui.activities.CartListActivity
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
-class CartListAdapter(private val context: Context) :
+class CartListAdapter(private val context: Context, private val updateCartItems: Boolean) :
     RecyclerView.Adapter<CartListAdapter.ViewHolder>(), View.OnClickListener {
 
     private var cartItems: List<CartItem> = listOf()
-
     private var cartItem: CartItem? = null
 
     class ViewHolder(view: ItemListLayoutBinding) : RecyclerView.ViewHolder(view.root) {
@@ -54,23 +53,23 @@ class CartListAdapter(private val context: Context) :
     }
 
     override fun onClick(v: View) {
-            when(v.id) {
-               R.id.ib_delete_product -> {
-                    when (context) {
-                        is CartListActivity -> {
-                            context.showProgressDialog(context.getString(R.string.please_wait))
-                        }
+        when (v.id) {
+            R.id.ib_delete_product -> {
+                when (context) {
+                    is CartListActivity -> {
+                        context.showProgressDialog(context.getString(R.string.please_wait))
                     }
-                    FirestoreClass().removeItemFromCart(context, cartItem!!.id)
                 }
-                R.id.ib_remove_from_card -> {
-                    cartItem?.let { removeFromCart(it) }
-                }
-                R.id.ib_add_to_cart -> {
-                    cartItem?.let {  addToCart(cartItem!!) }
-                }
-
+                FirestoreClass().removeItemFromCart(context, cartItem!!.id)
             }
+            R.id.ib_remove_from_card -> {
+                cartItem?.let { removeFromCart(it) }
+            }
+            R.id.ib_add_to_cart -> {
+                cartItem?.let { addToCart(cartItem!!) }
+            }
+
+        }
     }
 
     private fun removeFromCart(cartItem: CartItem) {
@@ -128,16 +127,27 @@ class CartListAdapter(private val context: Context) :
             holder.ibRemoveAmount.visibility = View.GONE
             holder.ibAddAmount.visibility = View.GONE
 
+            if (!updateCartItems) {
+                holder.ibDeleteProduct.visibility = View.GONE
+            } else {
+                holder.ibDeleteProduct.visibility = View.VISIBLE
+            }
+
             holder.cartQuantity.text = context.getString(R.string.out_of_stock)
             holder.cartQuantity
                 .setTextColor(ContextCompat.getColor(context, R.color.colorSnackBarError))
         } else {
-            holder.ibRemoveAmount.visibility = View.VISIBLE
-            holder.ibAddAmount.visibility = View.VISIBLE
-
+            if (updateCartItems) {
+                holder.ibRemoveAmount.visibility = View.VISIBLE
+                holder.ibAddAmount.visibility = View.VISIBLE
+                holder.ibDeleteProduct.visibility = View.VISIBLE
+            } else {
+                holder.ibRemoveAmount.visibility = View.GONE
+                holder.ibAddAmount.visibility = View.GONE
+                holder.ibDeleteProduct.visibility = View.GONE
+            }
             holder.cartQuantity
                 .setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryText))
-
         }
     }
 

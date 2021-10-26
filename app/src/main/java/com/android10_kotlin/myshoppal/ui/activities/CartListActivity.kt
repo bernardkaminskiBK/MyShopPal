@@ -114,9 +114,9 @@ class CartListActivity : BaseActivity() {
         mBinding.rvCartItemsList.layoutManager = LinearLayoutManager(this)
         mBinding.rvCartItemsList.setHasFixedSize(true)
 
-        val adapter = CartListAdapter(this)
+        val adapter = CartListAdapter(this, true)
         mBinding.rvCartItemsList.adapter = adapter
-        adapter.show(cartList)
+        adapter.show(mCartListItems)
     }
 
     private fun getProductItemsList() {

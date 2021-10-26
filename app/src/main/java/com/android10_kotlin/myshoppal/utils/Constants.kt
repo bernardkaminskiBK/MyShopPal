@@ -6,6 +6,7 @@ object Constants {
     const val PRODUCTS = "products"
     const val ADDRESSES = "addresses"
     const val CART_ITEMS = "cartItems"
+    const val ORDERS = "orders"
 
     const val MALE = "male"
     const val FEMALE = "female"
@@ -42,5 +43,6 @@ object Constants {
     const val ADD_ADDRESS_REQUEST_CODE: Int = 121
 
     const val EXTRA_SELECT_ADDRESS = "extra_select_address"
+    const val EXTRA_SELECTED_ADDRESS = "extra_selected_address"
 
 }

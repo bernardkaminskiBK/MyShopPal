@@ -6,10 +6,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.android10_kotlin.myshoppal.R
-import com.android10_kotlin.myshoppal.models.Address
-import com.android10_kotlin.myshoppal.models.CartItem
-import com.android10_kotlin.myshoppal.models.Product
-import com.android10_kotlin.myshoppal.models.User
+import com.android10_kotlin.myshoppal.models.*
 import com.android10_kotlin.myshoppal.ui.activities.*
 import com.android10_kotlin.myshoppal.ui.adapters.DashboardListAdapter
 import com.android10_kotlin.myshoppal.ui.fragments.DashboardFragment
@@ -55,7 +52,7 @@ class FirestoreClass {
         return currentUserID
     }
 
-    fun getAllProductsList(activity: CartListActivity) {
+    fun getAllProductsList(activity: Activity) {
         mFireStore.collection(Constants.PRODUCTS)
             .get()
             .addOnSuccessListener { document ->
@@ -71,11 +68,16 @@ class FirestoreClass {
                     is CartListActivity -> {
                         activity.successProductsListFromFireStore(productsList)
                     }
+                    is CheckoutActivity -> {
+                        activity.successProductsListFromFireStore(productsList)
+                    }
                 }
             }.addOnFailureListener { e ->
-                activity.hideProgressDialog()
                 when (activity) {
                     is CartListActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is CheckoutActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
@@ -333,10 +335,16 @@ class FirestoreClass {
                     is CartListActivity -> {
                         activity.successCartItemsList(list)
                     }
+                    is CheckoutActivity -> {
+                        activity.successCartItemsList(list)
+                    }
                 }
             }.addOnFailureListener {
                 when (activity) {
                     is CartListActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is CheckoutActivity -> {
                         activity.hideProgressDialog()
                     }
                 }
@@ -440,6 +448,23 @@ class FirestoreClass {
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while deleting the address.",
+                    e
+                )
+            }
+    }
+
+    fun placeOrder(activity: CheckoutActivity, order: Order) {
+        mFireStore.collection(Constants.ORDERS)
+            .document()
+            .set(order, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.orderPlacedSuccess()
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while placing an order.",
                     e
                 )
             }
