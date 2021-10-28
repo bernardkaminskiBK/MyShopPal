@@ -133,6 +133,7 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
                 holder.ibDeleteProduct.visibility = View.VISIBLE
             }
 
+            holder.cartQuantity.textSize = 9f
             holder.cartQuantity.text = context.getString(R.string.out_of_stock)
             holder.cartQuantity
                 .setTextColor(ContextCompat.getColor(context, R.color.colorSnackBarError))
