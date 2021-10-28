@@ -92,9 +92,9 @@ class CheckoutActivity : BaseActivity() {
     fun successCartItemsList(cartList: ArrayList<CartItem>) {
         hideProgressDialog()
 
-        for(product in mProductsList) {
-            for(cartItem in cartList) {
-                if(product.id == cartItem.product_id) {
+        for (product in mProductsList) {
+            for (cartItem in cartList) {
+                if (product.id == cartItem.product_id) {
                     cartItem.stock_quantity = product.stock_quantity
                 }
             }
@@ -134,25 +134,33 @@ class CheckoutActivity : BaseActivity() {
 
     private fun placeAnOrder() {
         showProgressDialog(resources.getString(R.string.please_wait))
-       if(mAddressDetails != null) {
-           val order = Order(
-               FirestoreClass().getCurrentUserID(),
-               mCartItemsList,
-               mAddressDetails!!,
-               "My order ${System.currentTimeMillis()}",
-               mCartItemsList[0].image,
-               mSubTotal.toString(),
-               "10.0",
-               mTotalAmount.toString(),
-           )
-           FirestoreClass().placeOrder(this@CheckoutActivity, order)
-       }
+        if (mAddressDetails != null) {
+            val order = Order(
+                FirestoreClass().getCurrentUserID(),
+                mCartItemsList,
+                mAddressDetails!!,
+                "My order ${System.currentTimeMillis()}",
+                mCartItemsList[0].image,
+                mSubTotal.toString(),
+                "10.0",
+                mTotalAmount.toString(),
+            )
+            FirestoreClass().placeOrder(this@CheckoutActivity, order)
+        }
     }
 
     fun orderPlacedSuccess() {
+       FirestoreClass().updateAllDetails(this, mCartItemsList, null)
+    }
+
+    fun allDetailsUpdatedSuccessfully() {
         hideProgressDialog()
 
-        Toast.makeText(this@CheckoutActivity, "Your order was placed successfully.", Toast.LENGTH_SHORT)
+        Toast.makeText(
+            this@CheckoutActivity,
+            "Your order was placed successfully.",
+            Toast.LENGTH_SHORT
+        )
             .show()
 
         val intent = Intent(this@CheckoutActivity, DashboardActivity::class.java)

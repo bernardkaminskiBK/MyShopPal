@@ -34,6 +34,7 @@ object Constants {
     const val DEFAULT_CART_QUANTITY = "1"
 
     const val CART_QUANTITY = "cart_quantity"
+    const val STOCK_QUANTITY = "stock_quantity"
 
     const val HOME = "home"
     const val OFFICE = "office"
