@@ -10,6 +10,7 @@ import com.android10_kotlin.myshoppal.models.*
 import com.android10_kotlin.myshoppal.ui.activities.*
 import com.android10_kotlin.myshoppal.ui.adapters.DashboardListAdapter
 import com.android10_kotlin.myshoppal.ui.fragments.DashboardFragment
+import com.android10_kotlin.myshoppal.ui.fragments.OrdersFragment
 import com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils
@@ -489,6 +490,27 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "Error while getting the address list.", e)
             }
     }
+
+    fun getMyOrdersList(fragment: OrdersFragment) {
+        mFireStore.collection(Constants.ORDERS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+                val list: ArrayList<Order> = ArrayList()
+                for (i in document.documents) {
+                    val orderItem = i.toObject(Order::class.java)!!
+                    orderItem.id = i.id
+                    list.add(orderItem)
+                }
+                fragment.populateOrdersListInUI(list)
+            }
+            .addOnFailureListener { e ->
+                fragment.hideProgressDialog()
+                Log.e(fragment.javaClass.simpleName, "Error while getting the orders list.", e)
+            }
+    }
+
 
     fun deleteAddress(activity: AddressListActivity, addressId: String) {
         mFireStore.collection(Constants.ADDRESSES)

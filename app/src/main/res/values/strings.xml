@@ -140,4 +140,7 @@
     <string name="lbl_cash_on_delivery">Cash On Delivery</string>
     <string name="btn_lbl_place_order">PLACE ORDER</string>
 
+    <string name="no_orders_placed_yet">No orders placed yet.</string>
+    <string name="image_button_increase_amount">image_button_increase_amount</string>
+    <string name="image_button_decrease_amount">image_button_decrease_amount</string>
 </resources>
