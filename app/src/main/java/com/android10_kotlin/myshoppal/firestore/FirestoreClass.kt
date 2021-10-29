@@ -492,10 +492,9 @@ class FirestoreClass {
 
     fun getMyOrdersList(fragment: OrdersFragment) {
         mFireStore.collection(Constants.ORDERS)
-            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo("product_owner_id", getCurrentUserID())
             .get()
             .addOnSuccessListener { document ->
-                Log.e(fragment.javaClass.simpleName, document.documents.toString())
                 val list: ArrayList<Order> = ArrayList()
                 for (i in document.documents) {
                     val orderItem = i.toObject(Order::class.java)!!

@@ -138,6 +138,7 @@ class CheckoutActivity : BaseActivity() {
         if (mAddressDetails != null) {
             mOrdersDetails = Order(
                 FirestoreClass().getCurrentUserID(),
+                mCartItemsList[0].product_owner_id,
                 mCartItemsList,
                 mAddressDetails!!,
                 "My order ${System.currentTimeMillis()}",

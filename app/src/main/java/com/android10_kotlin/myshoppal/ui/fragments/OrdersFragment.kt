@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.FragmentOrdersBinding
@@ -16,6 +17,11 @@ import java.util.ArrayList
 class OrdersFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentOrdersBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getMyOrdersList()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,11 +61,6 @@ class OrdersFragment : BaseFragment() {
     private fun getMyOrdersList() {
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getMyOrdersList(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getMyOrdersList()
     }
 
 }

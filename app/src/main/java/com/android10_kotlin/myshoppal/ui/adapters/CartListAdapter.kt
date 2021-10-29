@@ -79,7 +79,7 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
             val cartQuantity: Int = cartItem.cart_quantity.toInt()
             val itemHashMap = HashMap<String, Any>()
 
-            itemHashMap[Constants.CART_QUANTITY] = (cartQuantity - 1).toString()
+            itemHashMap[Constants.CART_QUANTITY] = cartQuantity - 1
 
             if (context is CartListActivity) {
                 context.showProgressDialog(context.getString(R.string.please_wait))
@@ -94,7 +94,7 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
 
         if (cartQuantity < cartItem.stock_quantity) {
             val itemHashMap = HashMap<String, Any>()
-            itemHashMap[Constants.CART_QUANTITY] = (cartQuantity + 1).toString()
+            itemHashMap[Constants.CART_QUANTITY] = cartQuantity + 1
 
             if (context is CartListActivity) {
                 context.showProgressDialog(context.resources.getString(R.string.please_wait))

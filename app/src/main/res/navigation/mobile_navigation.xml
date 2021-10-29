@@ -23,4 +23,10 @@
         android:label="@string/orders_title"
         tools:layout="@layout/fragment_orders" />
 
+    <fragment
+        android:id="@+id/navigation_sold_products"
+        android:name="com.android10_kotlin.myshoppal.ui.fragments.SoldProductsFragment"
+        android:label="@string/sold_products_title"
+        tools:layout="@layout/fragment_sold_products" />
+
 </navigation>
