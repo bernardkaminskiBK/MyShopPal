@@ -11,7 +11,6 @@ import com.android10_kotlin.myshoppal.databinding.ActivityMyOrderDetailsBinding
 import com.android10_kotlin.myshoppal.models.Order
 import com.android10_kotlin.myshoppal.ui.adapters.CartListAdapter
 import com.android10_kotlin.myshoppal.utils.Constants
-import com.google.firestore.v1.StructuredQuery
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit

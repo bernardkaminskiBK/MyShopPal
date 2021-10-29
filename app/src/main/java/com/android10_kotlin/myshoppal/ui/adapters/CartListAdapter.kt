@@ -42,7 +42,7 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
         GlideLoader(context).loadPictureIntoView(cartItem!!.image, holder.cartItemImage)
         holder.cartItemName.text = cartItem!!.title
         holder.cartItemPrice.text = "${cartItem!!.price} €"
-        holder.cartQuantity.text = cartItem!!.cart_quantity
+        holder.cartQuantity.text = cartItem!!.cart_quantity.toString()
 
         checkCartQuantity(cartItem!!.cart_quantity, holder)
 
@@ -73,7 +73,7 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
     }
 
     private fun removeFromCart(cartItem: CartItem) {
-        if (cartItem.cart_quantity == "1") {
+        if (cartItem.cart_quantity == 1) {
             FirestoreClass().removeItemFromCart(context, cartItem.id)
         } else {
             val cartQuantity: Int = cartItem.cart_quantity.toInt()
@@ -90,9 +90,9 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
     }
 
     private fun addToCart(cartItem: CartItem) {
-        val cartQuantity: Int = cartItem.cart_quantity.toInt()
+        val cartQuantity: Int = cartItem.cart_quantity
 
-        if (cartQuantity < cartItem.stock_quantity.toInt()) {
+        if (cartQuantity < cartItem.stock_quantity) {
             val itemHashMap = HashMap<String, Any>()
             itemHashMap[Constants.CART_QUANTITY] = (cartQuantity + 1).toString()
 
@@ -105,7 +105,7 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
                 context.showErrorSnackBar(
                     context.resources.getString(
                         R.string.msg_for_available_stock,
-                        cartItem.stock_quantity
+                        cartItem.stock_quantity.toString()
                     ),
                     true
                 )
@@ -122,8 +122,8 @@ class CartListAdapter(private val context: Context, private val updateCartItems:
         notifyDataSetChanged()
     }
 
-    private fun checkCartQuantity(cartQuantity: String, holder: ViewHolder) {
-        if (cartQuantity.toInt() == 0) {
+    private fun checkCartQuantity(cartQuantity: Int, holder: ViewHolder) {
+        if (cartQuantity == 0) {
             holder.ibRemoveAmount.visibility = View.GONE
             holder.ibAddAmount.visibility = View.GONE
 

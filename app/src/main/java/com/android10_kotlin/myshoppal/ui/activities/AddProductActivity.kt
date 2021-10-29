@@ -146,7 +146,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
         val description = mBinding.etProductDescription.text.toString().trim { it <= ' ' }
         val quantity = mBinding.etProductQuantity.text.toString().trim { it <= ' ' }
 
-        val product = Product(id, userName, title, price, description, quantity, mProductImageURL)
+        val product = Product(id, userName, title, price, description, quantity.toInt(), mProductImageURL)
         FirestoreClass().uploadProductDetails(this, product)
     }
 

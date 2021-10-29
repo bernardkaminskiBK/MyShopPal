@@ -21,6 +21,7 @@ class CheckoutActivity : BaseActivity() {
     private lateinit var mBinding: ActivityCheckoutBinding
     private lateinit var mProductsList: ArrayList<Product>
     private lateinit var mCartItemsList: ArrayList<CartItem>
+    private lateinit var mOrdersDetails: Order
 
     private var mSubTotal: Double = 0.0
     private var mTotalAmount: Double = 0.0
@@ -135,7 +136,7 @@ class CheckoutActivity : BaseActivity() {
     private fun placeAnOrder() {
         showProgressDialog(resources.getString(R.string.please_wait))
         if (mAddressDetails != null) {
-            val order = Order(
+            mOrdersDetails = Order(
                 FirestoreClass().getCurrentUserID(),
                 mCartItemsList,
                 mAddressDetails!!,
@@ -146,12 +147,12 @@ class CheckoutActivity : BaseActivity() {
                 mTotalAmount.toString(),
                 System.currentTimeMillis()
             )
-            FirestoreClass().placeOrder(this@CheckoutActivity, order)
+            FirestoreClass().placeOrder(this@CheckoutActivity, mOrdersDetails)
         }
     }
 
     fun orderPlacedSuccess() {
-       FirestoreClass().updateAllDetails(this, mCartItemsList, null)
+       FirestoreClass().updateAllDetails(this, mCartItemsList, mOrdersDetails)
     }
 
     fun allDetailsUpdatedSuccessfully() {

@@ -67,6 +67,7 @@ class DashboardListAdapter(private val fragment: Fragment) :
         val cartItem =
             CartItem(
                 currentUser,
+                product.user_id,
                 product.id,
                 product.title,
                 product.price,

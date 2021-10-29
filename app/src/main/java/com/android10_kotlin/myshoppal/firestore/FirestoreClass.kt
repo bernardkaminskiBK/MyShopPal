@@ -399,40 +399,40 @@ class FirestoreClass {
             }
     }
 
-    fun updateAllDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>, order: Order?) {
+    fun updateAllDetails(activity: CheckoutActivity, cartList: ArrayList<CartItem>, order: Order) {
         val writeBatch = mFireStore.batch()
 
         // Prepare the sold product details
-//        for (cart in cartList) {
-//            val soldProduct = SoldProduct(
-//                FirestoreClass().getCurrentUserID(),
-//                cart.title,
-//                cart.price,
-//                cart.cart_quantity,
-//                cart.image,
-//                order.title,
-//                order.order_datetime,
-//                order.sub_total_amount,
-//                order.shipping_charge,
-//                order.total_amount,
-//                order.address
-//            )
-//            val documentReference = mFireStore.collection(Constants.SOLD_PRODUCTS)
-//                .document()
-//            writeBatch.set(documentReference, soldProduct)
-//        }
+        for (cartItem in cartList) {
+            val soldProduct = SoldProduct(
+                cartItem.product_owner_id,
+                cartItem.title,
+                cartItem.price,
+                cartItem.cart_quantity,
+                cartItem.image,
+                order.title,
+                order.order_datetime,
+                order.sub_total_amount,
+                order.shipping_charge,
+                order.total_amount,
+                order.address
+            )
+            val documentReference =
+                mFireStore.collection(Constants.SOLD_PRODUCTS).document(cartItem.product_id)
+            writeBatch.set(documentReference, soldProduct)
+        }
+
         // Here we will update the product stock in the products collection based to cart quantity.
         for (cart in cartList) {
             val productHashMap = HashMap<String, Any>()
-
-            productHashMap[Constants.STOCK_QUANTITY] =
-                (cart.stock_quantity.toInt() - cart.cart_quantity.toInt()).toString()
+            productHashMap[Constants.STOCK_QUANTITY] = cart.stock_quantity - cart.cart_quantity
 
             val documentReference = mFireStore.collection(Constants.PRODUCTS)
                 .document(cart.product_id)
 
             writeBatch.update(documentReference, productHashMap)
         }
+
         // Delete the list of cart items
         for (cart in cartList) {
             val documentReference = mFireStore.collection(Constants.CART_ITEMS)
@@ -443,7 +443,6 @@ class FirestoreClass {
         writeBatch.commit().addOnSuccessListener {
             activity.allDetailsUpdatedSuccessfully()
         }.addOnFailureListener { e ->
-            // Here call a function of base activity for transferring the result to it.
             activity.hideProgressDialog()
             Log.e(
                 activity.javaClass.simpleName,

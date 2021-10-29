@@ -37,7 +37,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             mBinding.tvProductDetailsTitle.text = it.title
             mBinding.tvProductDetailsPrice.text = it.price
             mBinding.tvProductDetailsDescription.text = it.description
-            mBinding.tvProductDetailsStockQuantity.text = it.stock_quantity
+            mBinding.tvProductDetailsStockQuantity.text = it.stock_quantity.toString()
         }
     }
 

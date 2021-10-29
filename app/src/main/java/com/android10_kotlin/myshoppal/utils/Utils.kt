@@ -8,13 +8,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import androidx.fragment.app.Fragment
-import com.android10_kotlin.myshoppal.R
-import com.android10_kotlin.myshoppal.models.Product
 import com.android10_kotlin.myshoppal.models.User
-import com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse

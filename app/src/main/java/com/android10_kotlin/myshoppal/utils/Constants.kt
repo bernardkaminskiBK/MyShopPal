@@ -7,6 +7,7 @@ object Constants {
     const val ADDRESSES = "addresses"
     const val CART_ITEMS = "cartItems"
     const val ORDERS = "orders"
+    const val SOLD_PRODUCTS = "sold_products"
 
     const val MALE = "male"
     const val FEMALE = "female"
@@ -31,7 +32,7 @@ object Constants {
 
     const val USER_ID = "user_id"
 
-    const val DEFAULT_CART_QUANTITY = "1"
+    const val DEFAULT_CART_QUANTITY = 1
 
     const val CART_QUANTITY = "cart_quantity"
     const val STOCK_QUANTITY = "stock_quantity"
