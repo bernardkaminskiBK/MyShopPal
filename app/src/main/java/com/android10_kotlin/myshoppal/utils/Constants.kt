@@ -31,6 +31,7 @@ object Constants {
     const val PRODUCT_DETAILS = "product_details"
 
     const val USER_ID = "user_id"
+    const val PRODUCT_OWNER_ID = "product_owner_id"
 
     const val DEFAULT_CART_QUANTITY = 1
 

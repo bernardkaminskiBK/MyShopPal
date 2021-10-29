@@ -12,6 +12,7 @@ import com.android10_kotlin.myshoppal.ui.adapters.DashboardListAdapter
 import com.android10_kotlin.myshoppal.ui.fragments.DashboardFragment
 import com.android10_kotlin.myshoppal.ui.fragments.OrdersFragment
 import com.android10_kotlin.myshoppal.ui.fragments.ProductsFragment
+import com.android10_kotlin.myshoppal.ui.fragments.SoldProductsFragment
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
@@ -492,7 +493,7 @@ class FirestoreClass {
 
     fun getMyOrdersList(fragment: OrdersFragment) {
         mFireStore.collection(Constants.ORDERS)
-            .whereEqualTo("product_owner_id", getCurrentUserID())
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
             .get()
             .addOnSuccessListener { document ->
                 val list: ArrayList<Order> = ArrayList()
@@ -544,5 +545,26 @@ class FirestoreClass {
             }
     }
 
-
+    fun getSoldProductsList(fragment: SoldProductsFragment) {
+        mFireStore.collection(Constants.SOLD_PRODUCTS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                val list: ArrayList<SoldProduct> = ArrayList()
+                for (i in document.documents) {
+                    val soldProduct = i.toObject(SoldProduct::class.java)!!
+                    soldProduct.id = i.id
+                    list.add(soldProduct)
+                }
+                fragment.successSoldProductsList(list)
+            }
+            .addOnFailureListener { e ->
+                fragment.hideProgressDialog()
+                Log.e(
+                    fragment.javaClass.simpleName,
+                    "Error while getting the list of sold products.",
+                    e
+                )
+            }
+    }
 }
