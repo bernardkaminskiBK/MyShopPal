@@ -159,7 +159,7 @@
     <string name="title_sold_products">Sold Products</string>
     <string name="no_products_sold_out_yet">No products sold out yet!</string>
 
-    <string name="title_sold_product_details">SOLD PRODUCT DETAILS</string>
+    <string name="title_sold_product_details">Sold product details</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

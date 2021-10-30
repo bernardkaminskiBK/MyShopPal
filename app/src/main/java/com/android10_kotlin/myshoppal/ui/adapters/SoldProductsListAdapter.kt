@@ -1,12 +1,14 @@
 package com.android10_kotlin.myshoppal.ui.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.android10_kotlin.myshoppal.databinding.ItemListSoldProductsLayoutBinding
 import com.android10_kotlin.myshoppal.models.SoldProduct
+import com.android10_kotlin.myshoppal.ui.activities.SoldProductDetailsActivity
+import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
 
 class SoldProductsListAdapter(private val context: Context) :
@@ -27,17 +29,16 @@ class SoldProductsListAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val myOrder = soldProductsList[position]
+        val soldProduct = soldProductsList[position]
 
-        GlideLoader(context).loadPictureIntoView(myOrder.image, holder.soldProductImage)
-        holder.soldProductName.text = myOrder.title
-        holder.soldProductPrice.text = "${myOrder.total_amount} €"
+        GlideLoader(context).loadPictureIntoView(soldProduct.image, holder.soldProductImage)
+        holder.soldProductName.text = soldProduct.title
+        holder.soldProductPrice.text = "${soldProduct.total_amount} €"
 
         holder.itemView.setOnClickListener {
-//            val intent = Intent(context, SoldProductDetailsActivity::class.java)
-//            intent.putExtra(Constants.EXTRA_MY_ORDER_DETAILS, myOrder)
-//            context.startActivity(intent)
-            Toast.makeText(context, "Sold product details activity", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, SoldProductDetailsActivity::class.java)
+            intent.putExtra(Constants.EXTRA_SOLD_PRODUCT_DETAILS, soldProduct)
+            context.startActivity(intent)
         }
     }
 
