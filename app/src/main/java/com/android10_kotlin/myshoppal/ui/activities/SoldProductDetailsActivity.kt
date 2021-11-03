@@ -3,11 +3,13 @@ package com.android10_kotlin.myshoppal.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.android10_kotlin.myshoppal.R
 import com.android10_kotlin.myshoppal.databinding.ActivitySoldProductDetailsBinding
 import com.android10_kotlin.myshoppal.models.SoldProduct
 import com.android10_kotlin.myshoppal.utils.Constants
 import com.android10_kotlin.myshoppal.utils.GlideLoader
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,6 +24,12 @@ class SoldProductDetailsActivity : AppCompatActivity() {
 
         setupToolbar()
         checkIfHasExtra()
+
+        mBinding.ivSold.setOnClickListener {
+            mBinding.ivSold.animate().apply {
+                this.alpha(0f)
+            }
+        }
     }
 
     private fun setupToolbar() {
